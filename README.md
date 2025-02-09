@@ -1,30 +1,36 @@
-# OruPhones App
+# OruPhones Flutter Assignment
 
-A Flutter application built for OruPhones internship assessment
+A Flutter application for OruPhones internship assignment.
 
-## Architecture & State Management
+## Project Setup Steps
 
-### State Management
-- Using **Stacked** architecture for state management
-- Services for business logic
-- ViewModels for UI state management
-- Views for UI representation
+### Step 1: Initial Setup ✅
+- Created new Flutter project
+- Added basic dependencies:
+  - lottie: For splash screen animation
+- Created basic folder structure
+- Added splash screen animation asset
 
 ### Project Structure
 ```
 lib/
-├── app/                    # App level configurations
-├── core/                   # Core functionality
-│   ├── constants/         # App constants
-│   ├── models/           # Data models
-│   ├── services/         # Business logic services
-│   └── utils/            # Utility functions
-├── ui/                    # UI components
-│   ├── views/            # Screen implementations
-│   ├── widgets/          # Reusable widgets
-│   └── common/           # Common UI components
-└── main.dart             # Entry point
+├── ui/
+│   └── views/
+│       └── splash/
+│           └── splash_view.dart
+└── main.dart
+
+assets/
+└── animations/
+    └── splash.json
 ```
+
+### Current Progress
+- [x] Project Setup
+- [ ] Splash Screen Implementation
+- [ ] Authentication Flow
+- [ ] Home Screen
+- [ ] Firebase Integration
 
 ## Features
 - OTP Authentication
