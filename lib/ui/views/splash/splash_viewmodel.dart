@@ -1,8 +1,13 @@
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/firebase_service.dart';
 
 class SplashViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+
   Future<void> checkAuthStatus() async {
     try {
       // Initialize Firebase and setup notifications
@@ -21,19 +26,19 @@ class SplashViewModel extends BaseViewModel {
 
         if (response.user.name.isEmpty) {
           // Navigate to confirm name screen if name is empty
-          // TODO: Add navigation to confirm name screen
-          print('Navigating to confirm name screen');
+          _navigationService.replaceWith(Routes.confirmNameView);
           return;
+        } else {
+          _navigationService.replaceWith(Routes.homeView);
         }
       }
 
       // Navigate to home screen for all other cases
-      // TODO: Add navigation to home screen
-      print('Navigating to home screen');
+      _navigationService.replaceWith('/home-view');
     } catch (e) {
       print('Error in splash screen: $e');
       // Navigate to home screen even on error
-      // TODO: Add navigation to home screen
+      _navigationService.replaceWith('/home-view');
     }
   }
 }

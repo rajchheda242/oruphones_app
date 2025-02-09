@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import '../../../services/auth_service.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
+import '../../../ui/views/auth/verify_otp_view.dart';
 
 class LoginViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
   final phoneController = TextEditingController();
   bool _acceptedTerms = false;
   String? errorMessage;
@@ -26,7 +31,6 @@ class LoginViewModel extends BaseViewModel {
 
     try {
       setBusy(true);
-      errorMessage = null;
       final phone = phoneController.text;
 
       final result = await AuthService().generateOtp(
@@ -35,15 +39,16 @@ class LoginViewModel extends BaseViewModel {
       );
 
       if (!result.success) {
-        errorMessage = result.error;
-        notifyListeners();
+        setError(result.error ?? 'Failed to generate OTP');
         return;
       }
 
-      // TODO: Navigation
+      _navigationService.navigateTo(
+        Routes.verifyOtpView,
+        arguments: VerifyOtpViewArguments(phoneNumber: phone),
+      );
     } catch (e) {
-      errorMessage = 'Something went wrong. Please try again.';
-      notifyListeners();
+      setError(e.toString());
     } finally {
       setBusy(false);
     }

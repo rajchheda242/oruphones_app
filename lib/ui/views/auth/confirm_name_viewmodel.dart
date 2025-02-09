@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 import '../../../services/auth_service.dart';
 
 class ConfirmNameViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
   final nameController = TextEditingController();
   String? errorMessage;
 
@@ -26,7 +30,7 @@ class ConfirmNameViewModel extends BaseViewModel {
         return;
       }
 
-      // TODO: Navigate to home screen
+      _navigationService.replaceWith(Routes.homeView);
     } catch (e) {
       errorMessage = 'Something went wrong. Please try again.';
       notifyListeners();

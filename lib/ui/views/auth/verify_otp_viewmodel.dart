@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 import '../../../services/auth_service.dart';
 
 class VerifyOtpViewModel extends BaseViewModel {
@@ -9,6 +12,7 @@ class VerifyOtpViewModel extends BaseViewModel {
   final List<TextEditingController> otpControllers;
   int _resendTime = 30;
   Timer? _timer;
+  final _navigationService = locator<NavigationService>();
 
   VerifyOtpViewModel(this.phoneNumber)
       : otpControllers = List.generate(4, (_) => TextEditingController()) {
@@ -68,9 +72,9 @@ class VerifyOtpViewModel extends BaseViewModel {
 
       final authResponse = result.data!;
       if (authResponse.user.name.isEmpty) {
-        // TODO: Navigate to confirm name screen
+        _navigationService.replaceWith(Routes.confirmNameView);
       } else {
-        // TODO: Navigate to home screen
+        _navigationService.replaceWith(Routes.homeView);
       }
     } catch (e) {
       setError(e.toString());
