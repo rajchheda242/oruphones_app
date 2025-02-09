@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../core/models/api_response.dart';
 
 class AuthService {
   final _dio = Dio();
@@ -13,7 +14,7 @@ class AuthService {
     }
   }
 
-  Future<void> generateOtp({
+  Future<ApiResponse<void>> generateOtp({
     required int countryCode,
     required int mobileNumber,
   }) async {
@@ -26,11 +27,12 @@ class AuthService {
         },
       );
 
-      if (response.statusCode != 200) {
-        throw Exception('Failed to generate OTP');
-      }
+      return ApiResponse(success: true);
     } catch (e) {
-      throw Exception('Failed to generate OTP: $e');
+      return ApiResponse(
+        success: false,
+        error: 'Failed to generate OTP: ${e.toString()}',
+      );
     }
   }
 }

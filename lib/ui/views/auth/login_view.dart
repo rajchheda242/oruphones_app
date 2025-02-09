@@ -21,25 +21,57 @@ class LoginView extends StackedView<LoginViewModel> {
             ? const BorderRadius.vertical(top: Radius.circular(16))
             : null,
       ),
-      child: Column(
-        mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
-        children: [
-          // Close button for bottom sheet
-          if (isBottomSheet)
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.pop(context),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
+          children: [
+            if (isBottomSheet) _buildCloseButton(),
+            _buildLogo(),
+            _buildWelcomeText(),
+            if (viewModel.errorMessage != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text(
+                  viewModel.errorMessage!,
+                  style: const TextStyle(color: Colors.red, fontSize: 12),
+                ),
+              ),
+            TextFormField(
+              controller: viewModel.phoneController,
+              keyboardType: TextInputType.phone,
+              maxLength: 10,
+              onChanged: (_) => viewModel.notifyListeners(),
+              decoration: InputDecoration(
+                prefixText: '+91 ',
+                hintText: 'Mobile Number',
+                errorText: viewModel.phoneError,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                counterText: '',
               ),
             ),
+            _buildTermsAndConditions(viewModel),
+            _buildNextButton(viewModel),
+          ],
+        ),
+      ),
+    );
+  }
 
-          // Logo
-          Image.asset('assets/images/logo.png', height: 40),
-          const SizedBox(height: 24),
+  Widget _buildCloseButton() => Align(
+        alignment: Alignment.topRight,
+        child: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () => Navigator.pop(context),
+        ),
+      );
 
-          // Welcome text
-          const Text(
+  Widget _buildLogo() => Image.asset('assets/images/logo.png', height: 40);
+
+  Widget _buildWelcomeText() => Column(
+        children: const [
+          Text(
             'Welcome',
             style: TextStyle(
               fontSize: 24,
@@ -47,77 +79,55 @@ class LoginView extends StackedView<LoginViewModel> {
               color: Color(0xFF1F2937),
             ),
           ),
-          const Text(
+          Text(
             'Sign in to continue',
-            style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFF6B7280),
-            ),
+            style: TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32),
+        ],
+      );
 
-          // Phone number input
-          TextFormField(
-            controller: viewModel.phoneController,
-            keyboardType: TextInputType.phone,
-            decoration: InputDecoration(
-              prefixText: '+91 ',
-              hintText: 'Mobile Number',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
+  Widget _buildTermsAndConditions(LoginViewModel viewModel) => Row(
+        children: [
+          Checkbox(
+            value: viewModel.acceptedTerms,
+            onChanged: viewModel.setAcceptedTerms,
           ),
-          const SizedBox(height: 16),
-
-          // Terms and conditions
-          Row(
-            children: [
-              Checkbox(
-                value: viewModel.acceptedTerms,
-                onChanged: viewModel.setAcceptedTerms,
+          const Text('Accept '),
+          TextButton(
+            onPressed: () {}, // Empty void action
+            child: const Text(
+              'Terms and condition',
+              style: TextStyle(
+                color: Color(0xFF4318FF),
               ),
-              const Text('Accept '),
-              TextButton(
-                onPressed: () {}, // Empty void action
-                child: const Text(
-                  'Terms and condition',
-                  style: TextStyle(
-                    color: Color(0xFF4318FF),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-
-          // Next button
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: viewModel.canProceed ? viewModel.generateOtp : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4318FF),
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: viewModel.isBusy
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : const Text(
-                      'Next',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
             ),
           ),
         ],
-      ),
-    );
-  }
+      );
+
+  Widget _buildNextButton(LoginViewModel viewModel) => SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: viewModel.canProceed ? viewModel.generateOtp : null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF4318FF),
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: viewModel.isBusy
+              ? const CircularProgressIndicator(color: Colors.white)
+              : const Text(
+                  'Next',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+        ),
+      );
 
   @override
   LoginViewModel viewModelBuilder(BuildContext context) => LoginViewModel();

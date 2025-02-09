@@ -5,6 +5,13 @@ import '../../../services/auth_service.dart';
 class LoginViewModel extends BaseViewModel {
   final phoneController = TextEditingController();
   bool _acceptedTerms = false;
+  String? errorMessage;
+
+  String? get phoneError {
+    if (phoneController.text.isEmpty) return null;
+    if (phoneController.text.length != 10) return 'Enter valid number';
+    return null;
+  }
 
   bool get acceptedTerms => _acceptedTerms;
   bool get canProceed => phoneController.text.length == 10 && _acceptedTerms;
@@ -19,16 +26,24 @@ class LoginViewModel extends BaseViewModel {
 
     try {
       setBusy(true);
+      errorMessage = null;
       final phone = phoneController.text;
 
-      await AuthService().generateOtp(
+      final result = await AuthService().generateOtp(
         countryCode: 91,
         mobileNumber: int.parse(phone),
       );
 
-      // TODO: Navigate to OTP verification screen
+      if (!result.success) {
+        errorMessage = result.error;
+        notifyListeners();
+        return;
+      }
+
+      // TODO: Navigation
     } catch (e) {
-      setError(e.toString());
+      errorMessage = 'Something went wrong. Please try again.';
+      notifyListeners();
     } finally {
       setBusy(false);
     }

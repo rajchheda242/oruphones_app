@@ -23,10 +23,15 @@ A Flutter application for OruPhones internship assignment.
 - Implemented OTP generation API
 - Added phone number validation
 - Added terms and conditions acceptance
+- Added proper error handling with API responses
+- Improved UI/UX with form validation
 
 ### Project Structure
 ```
 lib/
+├── core/
+│   └── models/
+│       └── api_response.dart
 ├── services/
 │   ├── auth_service.dart
 │   └── firebase_service.dart
@@ -51,6 +56,13 @@ assets/
 - [⏳] Authentication Flow
 - [ ] Home Screen
 - [ ] Firebase Integration
+
+### Architecture Highlights
+- Using Stacked for state management
+- Proper separation of concerns (Views, ViewModels, Services)
+- Reusable components
+- Proper error handling with API responses
+- Form validation and user feedback
 
 ## Features
 - OTP Authentication
