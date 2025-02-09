@@ -4,12 +4,18 @@ A Flutter application for OruPhones internship assignment.
 
 ## Project Setup Steps
 
-### Step 1: Initial Setup ✅
+### Step 1: Initial Setup 
 - Created new Flutter project
 - Added basic dependencies:
   - lottie: For splash screen animation
 - Created basic folder structure
 - Added splash screen animation asset
+
+### Step 2: Splash Screen Implementation ⏳
+- Added authentication check
+- Added API service integration
+- Added state management with Stacked
+- Implemented navigation logic
 
 ### Project Structure
 ```
@@ -27,7 +33,7 @@ assets/
 
 ### Current Progress
 - [x] Project Setup
-- [ ] Splash Screen Implementation
+- [x] Splash Screen Implementation
 - [ ] Authentication Flow
 - [ ] Home Screen
 - [ ] Firebase Integration
