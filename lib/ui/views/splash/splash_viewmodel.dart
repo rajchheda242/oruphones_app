@@ -3,28 +3,29 @@ import '../../../services/auth_service.dart';
 
 class SplashViewModel extends BaseViewModel {
   Future<void> checkAuthStatus() async {
-    // Add 3 second delay to show animation
-    await Future.delayed(const Duration(seconds: 3));
-
     try {
+      // Add 3 second delay to show animation
+      await Future.delayed(const Duration(seconds: 3));
+
       // Check if user is logged in using isLoggedIn API
       final response = await AuthService().checkLoginStatus();
 
+      // Store authentication state if user is authenticated
       if (response.isAuthenticated) {
+        // TODO: Persist authentication state
         if (response.user.name.isEmpty) {
-          // Navigate to confirm name screen
-          // TODO: Add navigation
-        } else {
-          // Navigate to home screen
-          // TODO: Add navigation
+          // TODO: Set flag to show confirm name screen inside home
+          print('User needs to confirm name');
         }
-      } else {
-        // Navigate to home screen (user will see login option there)
-        // TODO: Add navigation
       }
+
+      // Always navigate to home screen after tasks complete
+      // TODO: Add navigation to home screen
+      print('Navigating to home screen');
     } catch (e) {
-      // Handle error
-      // TODO: Show error message
+      // Log error but still navigate to home screen
+      print('Error checking auth status: $e');
+      // TODO: Add navigation to home screen
     }
   }
 }
