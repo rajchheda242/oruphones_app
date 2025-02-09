@@ -25,7 +25,7 @@ class LoginView extends StackedView<LoginViewModel> {
         child: Column(
           mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
           children: [
-            if (isBottomSheet) _buildCloseButton(),
+            if (isBottomSheet) _buildCloseButton(context),
             _buildLogo(),
             _buildWelcomeText(),
             if (viewModel.errorMessage != null)
@@ -59,7 +59,7 @@ class LoginView extends StackedView<LoginViewModel> {
     );
   }
 
-  Widget _buildCloseButton() => Align(
+  Widget _buildCloseButton(BuildContext context) => Align(
         alignment: Alignment.topRight,
         child: IconButton(
           icon: const Icon(Icons.close),
