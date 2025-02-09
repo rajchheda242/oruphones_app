@@ -12,6 +12,27 @@ class AuthService {
       throw Exception('Failed to check auth status');
     }
   }
+
+  Future<void> generateOtp({
+    required int countryCode,
+    required int mobileNumber,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '$_baseUrl/login/otpCreate',
+        data: {
+          'countryCode': countryCode,
+          'mobileNumber': mobileNumber,
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to generate OTP');
+      }
+    } catch (e) {
+      throw Exception('Failed to generate OTP: $e');
+    }
+  }
 }
 
 class AuthResponse {

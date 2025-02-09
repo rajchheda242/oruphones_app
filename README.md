@@ -18,6 +18,12 @@ A Flutter application for OruPhones internship assignment.
 - Added Firebase initialization and notification permissions
 - Implemented navigation logic
 
+### Step 3: Authentication Implementation 🚧
+- Created reusable login widget (works as both screen and bottom sheet)
+- Implemented OTP generation API
+- Added phone number validation
+- Added terms and conditions acceptance
+
 ### Project Structure
 ```
 lib/
@@ -26,6 +32,9 @@ lib/
 │   └── firebase_service.dart
 ├── ui/
 │   └── views/
+│       ├── auth/
+│       │   ├── login_view.dart
+│       │   └── login_viewmodel.dart
 │       └── splash/
 │           ├── splash_view.dart
 │           └── splash_viewmodel.dart
@@ -39,7 +48,7 @@ assets/
 ### Current Progress
 - [x] Project Setup
 - [x] Splash Screen Implementation
-- [ ] Authentication Flow
+- [⏳] Authentication Flow
 - [ ] Home Screen
 - [ ] Firebase Integration
 
