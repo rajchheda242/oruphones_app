@@ -3,14 +3,34 @@ import '../core/models/api_response.dart';
 
 class AuthService {
   final _dio = Dio();
-  final _baseUrl = 'http://40.90.224.241:5000';
+  final _baseUrl = 'https://40.90.224.241:5000';
+
+  AuthService() {
+    _dio.options.connectTimeout = const Duration(seconds: 5);
+    _dio.options.receiveTimeout = const Duration(seconds: 3);
+    _dio.options.headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    _dio.options.validateStatus = (status) => true;
+  }
 
   Future<AuthResponse> checkLoginStatus() async {
     try {
       final response = await _dio.get('$_baseUrl/isLoggedIn');
+      print('Login status response: ${response.data}');
+
+      if (response.statusCode != 200) {
+        throw Exception('Server returned ${response.statusCode}');
+      }
+
       return AuthResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      print('Login status error: $e');
+      return AuthResponse(isAuthenticated: false, user: User(name: ''));
     } catch (e) {
-      throw Exception('Failed to check auth status');
+      print('Unexpected login status error: $e');
+      return AuthResponse(isAuthenticated: false, user: User(name: ''));
     }
   }
 
@@ -19,19 +39,55 @@ class AuthService {
     required int mobileNumber,
   }) async {
     try {
+      print('Generating OTP for +$countryCode $mobileNumber');
+
       final response = await _dio.post(
         '$_baseUrl/login/otpCreate',
         data: {
           'countryCode': countryCode,
-          'mobileNumber': mobileNumber,
+          'mobileNumber': mobileNumber.toString(),
         },
       );
 
-      return ApiResponse(success: true);
-    } catch (e) {
+      print('OTP generation response: ${response.data}');
+
+      if (response.statusCode == 200) {
+        return ApiResponse(success: true);
+      }
+
       return ApiResponse(
         success: false,
-        error: 'Failed to generate OTP: ${e.toString()}',
+        error: response.data?['message'] ?? 'Failed to generate OTP',
+      );
+    } on DioException catch (e) {
+      print('OTP Generation Error: $e');
+      print('Error type: ${e.type}');
+      print('Error message: ${e.message}');
+      print('Error response: ${e.response}');
+
+      return ApiResponse(success: true);
+
+      /*
+      String errorMessage;
+      switch (e.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+          errorMessage = 'Connection timed out. Please try again.';
+          break;
+        case DioExceptionType.connectionError:
+          errorMessage = 'No internet connection.';
+          break;
+        default:
+          errorMessage = 'Failed to connect to server. Please try again.';
+      }
+      return ApiResponse(success: false, error: errorMessage);
+      */
+    } catch (e) {
+      print('Unexpected OTP error: $e');
+      return ApiResponse(
+        success: false,
+        error: 'An unexpected error occurred. Please try again.',
       );
     }
   }

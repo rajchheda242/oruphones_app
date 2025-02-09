@@ -14,29 +14,16 @@ class LoginView extends StackedView<LoginViewModel> {
   Widget builder(
       BuildContext context, LoginViewModel viewModel, Widget? child) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: isBottomSheet
-              ? const BorderRadius.vertical(top: Radius.circular(16))
-              : null,
-        ),
-        child: SingleChildScrollView(
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (isBottomSheet) _buildCloseButton(context),
               _buildLogo(),
               _buildWelcomeText(),
-              if (viewModel.errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Text(
-                    viewModel.errorMessage!,
-                    style: const TextStyle(color: Colors.red, fontSize: 12),
-                  ),
-                ),
               TextFormField(
                 controller: viewModel.phoneController,
                 keyboardType: TextInputType.phone,
@@ -52,8 +39,13 @@ class LoginView extends StackedView<LoginViewModel> {
                   counterText: '',
                 ),
               ),
-              _buildTermsAndConditions(viewModel),
-              _buildNextButton(viewModel),
+              Column(
+                children: [
+                  _buildTermsAndConditions(viewModel),
+                  const SizedBox(height: 8),
+                  _buildNextButton(viewModel),
+                ],
+              ),
             ],
           ),
         ),
@@ -69,35 +61,55 @@ class LoginView extends StackedView<LoginViewModel> {
         ),
       );
 
-  Widget _buildLogo() => Image.asset('assets/images/logo.png', height: 40);
+  Widget _buildLogo() => Image.asset(
+        'assets/images/logo.png',
+        height: 100,
+      );
 
-  Widget _buildWelcomeText() => Column(
-        children: const [
-          Text(
-            'Welcome',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1F2937),
+  Widget _buildWelcomeText() => Center(
+        child: Column(
+          children: const [
+            Text(
+              'Welcome',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF46389C),
+              ),
             ),
-          ),
-          Text(
-            'Sign in to continue',
-            style: TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
-          ),
-          SizedBox(height: 32),
-        ],
+            SizedBox(height: 4),
+            Text(
+              'Sign in to continue',
+              style: TextStyle(
+                fontSize: 14,
+                color: Color(0xFF6B7280),
+              ),
+            ),
+            SizedBox(height: 115),
+          ],
+        ),
       );
 
   Widget _buildTermsAndConditions(LoginViewModel viewModel) => Row(
         children: [
-          Checkbox(
-            value: viewModel.acceptedTerms,
-            onChanged: viewModel.setAcceptedTerms,
+          SizedBox(
+            width: 24,
+            height: 24,
+            child: Checkbox(
+              value: viewModel.acceptedTerms,
+              onChanged: viewModel.setAcceptedTerms,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
           ),
+          const SizedBox(width: 8),
           const Text('Accept '),
           TextButton(
-            onPressed: () {}, // Empty void action
+            onPressed: () {},
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
             child: const Text(
               'Terms and condition',
               style: TextStyle(
@@ -110,17 +122,25 @@ class LoginView extends StackedView<LoginViewModel> {
 
   Widget _buildNextButton(LoginViewModel viewModel) => SizedBox(
         width: double.infinity,
+        height: 48,
         child: ElevatedButton(
           onPressed: viewModel.canProceed ? viewModel.generateOtp : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF4318FF),
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            disabledBackgroundColor: Colors.grey[300],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
           ),
           child: viewModel.isBusy
-              ? const CircularProgressIndicator(color: Colors.white)
+              ? const SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2,
+                  ),
+                )
               : const Text(
                   'Next',
                   style: TextStyle(
@@ -132,5 +152,6 @@ class LoginView extends StackedView<LoginViewModel> {
       );
 
   @override
-  LoginViewModel viewModelBuilder(BuildContext context) => LoginViewModel();
+  LoginViewModel viewModelBuilder(BuildContext context) =>
+      LoginViewModel(isBottomSheet: isBottomSheet);
 }

@@ -10,14 +10,17 @@ class SplashViewModel extends BaseViewModel {
 
   Future<void> checkAuthStatus() async {
     try {
-      // Initialize Firebase and setup notifications
-      await FirebaseService.initialize();
-      await FirebaseService.setupNotifications();
+      // Try Firebase setup but don't block app functionality
+      try {
+        await FirebaseService.initialize();
+        await FirebaseService.setupNotifications();
+      } catch (e) {
+        print('Firebase setup error: $e');
+        // Continue with app flow even if Firebase fails
+      }
 
-      // Add 3 second delay to show animation
       await Future.delayed(const Duration(seconds: 3));
 
-      // Check if user is logged in using isLoggedIn API
       final response = await AuthService().checkLoginStatus();
 
       // Store authentication state if user is authenticated

@@ -8,21 +8,39 @@ import '../../../ui/views/auth/verify_otp_view.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _authService = locator<AuthService>();
   final phoneController = TextEditingController();
   bool _acceptedTerms = false;
-  String? errorMessage;
+  final bool isBottomSheet;
+
+  LoginViewModel({this.isBottomSheet = false});
 
   String? get phoneError {
-    if (phoneController.text.isEmpty) return null;
-    if (phoneController.text.length != 10) return 'Enter valid number';
+    final phone = phoneController.text;
+    if (phone.isEmpty) return null;
+    if (phone.length != 10) return 'Enter valid number';
+    if (!RegExp(r'^[0-9]{10}$').hasMatch(phone)) {
+      return 'Enter valid number';
+    }
     return null;
   }
 
   bool get acceptedTerms => _acceptedTerms;
-  bool get canProceed => phoneController.text.length == 10 && _acceptedTerms;
+
+  bool get canProceed =>
+      phoneController.text.length == 10 &&
+      _acceptedTerms &&
+      !isBusy &&
+      phoneError == null;
 
   void setAcceptedTerms(bool? value) {
     _acceptedTerms = value ?? false;
+    notifyListeners();
+  }
+
+  @override
+  void setError(dynamic message) {
+    super.setError(message);
     notifyListeners();
   }
 
@@ -31,9 +49,12 @@ class LoginViewModel extends BaseViewModel {
 
     try {
       setBusy(true);
+      setError(null);
+      notifyListeners();
+
       final phone = phoneController.text;
 
-      final result = await AuthService().generateOtp(
+      final result = await _authService.generateOtp(
         countryCode: 91,
         mobileNumber: int.parse(phone),
       );
@@ -43,12 +64,16 @@ class LoginViewModel extends BaseViewModel {
         return;
       }
 
-      _navigationService.navigateTo(
+      await _navigationService.navigateTo(
         Routes.verifyOtpView,
-        arguments: VerifyOtpViewArguments(phoneNumber: phone),
+        arguments: VerifyOtpViewArguments(
+          phoneNumber: phone,
+          isBottomSheet: isBottomSheet,
+        ),
       );
     } catch (e) {
-      setError(e.toString());
+      print('Generate OTP Error: $e');
+      setError('Something went wrong. Please try again.');
     } finally {
       setBusy(false);
     }

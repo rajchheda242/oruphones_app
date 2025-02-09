@@ -4,17 +4,27 @@ import 'package:permission_handler/permission_handler.dart';
 
 class FirebaseService {
   static Future<void> initialize() async {
-    await Firebase.initializeApp();
+    try {
+      await Firebase.initializeApp(
+        options: const FirebaseOptions(
+          apiKey: "YOUR_API_KEY", // Add your Firebase config
+          appId: "YOUR_APP_ID",
+          messagingSenderId: "YOUR_SENDER_ID",
+          projectId: "YOUR_PROJECT_ID",
+        ),
+      );
+    } catch (e) {
+      print('Firebase initialization error: $e');
+      // Continue app execution even if Firebase fails
+    }
   }
 
   static Future<void> setupNotifications() async {
     try {
       final status = await Permission.notification.request();
-
       if (status.isGranted) {
-        final messaging = FirebaseMessaging.instance;
-        final token = await messaging.getToken();
-        print('FCM Token: $token');
+        final fcmToken = await FirebaseMessaging.instance.getToken();
+        print('FCM Token: $fcmToken');
 
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           print('Got a message whilst in the foreground!');
@@ -27,7 +37,8 @@ class FirebaseService {
         });
       }
     } catch (e) {
-      print('Error setting up notifications: $e');
+      print('Notification setup error: $e');
+      // Continue app execution even if notification setup fails
     }
   }
 }
