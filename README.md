@@ -25,6 +25,15 @@ A Flutter application for OruPhones internship assignment.
 - Added terms and conditions acceptance
 - Added proper error handling with API responses
 - Improved UI/UX with form validation
+- Added OTP verification screen with:
+  - 4-digit OTP input
+  - Resend OTP functionality with timer
+  - Validation and error handling
+  - Navigation logic based on user state
+- Added Confirm Name screen with:
+  - Name input validation
+  - API integration for name update
+  - Error handling and loading states
 
 ### Project Structure
 ```
@@ -39,7 +48,11 @@ lib/
 │   └── views/
 │       ├── auth/
 │       │   ├── login_view.dart
-│       │   └── login_viewmodel.dart
+│       │   ├── login_viewmodel.dart
+│       │   ├── verify_otp_view.dart
+│       │   ├── verify_otp_viewmodel.dart
+│       │   ├── confirm_name_view.dart
+│       │   └── confirm_name_viewmodel.dart
 │       └── splash/
 │           ├── splash_view.dart
 │           └── splash_viewmodel.dart

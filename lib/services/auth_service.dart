@@ -62,6 +62,28 @@ class AuthService {
       );
     }
   }
+
+  Future<ApiResponse<void>> updateUserName({
+    required int countryCode,
+    required String userName,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '$_baseUrl/update',
+        data: {
+          'countryCode': countryCode,
+          'userName': userName,
+        },
+      );
+
+      return ApiResponse(success: true);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        error: 'Failed to update name: ${e.toString()}',
+      );
+    }
+  }
 }
 
 class AuthResponse {

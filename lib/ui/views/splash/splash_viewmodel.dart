@@ -20,10 +20,10 @@ class SplashViewModel extends BaseViewModel {
         // TODO: Persist authentication state
 
         if (response.user.name.isEmpty) {
-          // Navigate to confirm name screen for new users
+          // Navigate to confirm name screen if name is empty
           // TODO: Add navigation to confirm name screen
           print('Navigating to confirm name screen');
-          return; // Exit early to prevent home screen navigation
+          return;
         }
       }
 
@@ -32,6 +32,7 @@ class SplashViewModel extends BaseViewModel {
       print('Navigating to home screen');
     } catch (e) {
       print('Error in splash screen: $e');
+      // Navigate to home screen even on error
       // TODO: Add navigation to home screen
     }
   }
