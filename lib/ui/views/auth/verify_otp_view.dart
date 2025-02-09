@@ -15,26 +15,28 @@ class VerifyOtpView extends StackedView<VerifyOtpViewModel> {
   @override
   Widget builder(
       BuildContext context, VerifyOtpViewModel viewModel, Widget? child) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: isBottomSheet
-            ? const BorderRadius.vertical(top: Radius.circular(16))
-            : null,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
-          children: [
-            if (isBottomSheet) _buildCloseButton(context),
-            _buildLogo(),
-            _buildTitle(),
-            _buildOtpDescription(),
-            _buildOtpInput(viewModel, context),
-            _buildResendOtp(viewModel),
-            _buildVerifyButton(viewModel),
-          ],
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: isBottomSheet
+              ? const BorderRadius.vertical(top: Radius.circular(16))
+              : null,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
+            children: [
+              if (isBottomSheet) _buildCloseButton(context),
+              _buildLogo(),
+              _buildTitle(),
+              _buildOtpDescription(),
+              _buildOtpInput(viewModel, context),
+              _buildResendOtp(viewModel),
+              _buildVerifyButton(viewModel),
+            ],
+          ),
         ),
       ),
     );

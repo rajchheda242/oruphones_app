@@ -13,47 +13,49 @@ class LoginView extends StackedView<LoginViewModel> {
   @override
   Widget builder(
       BuildContext context, LoginViewModel viewModel, Widget? child) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: isBottomSheet
-            ? const BorderRadius.vertical(top: Radius.circular(16))
-            : null,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
-          children: [
-            if (isBottomSheet) _buildCloseButton(context),
-            _buildLogo(),
-            _buildWelcomeText(),
-            if (viewModel.errorMessage != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Text(
-                  viewModel.errorMessage!,
-                  style: const TextStyle(color: Colors.red, fontSize: 12),
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: isBottomSheet
+              ? const BorderRadius.vertical(top: Radius.circular(16))
+              : null,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
+            children: [
+              if (isBottomSheet) _buildCloseButton(context),
+              _buildLogo(),
+              _buildWelcomeText(),
+              if (viewModel.errorMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    viewModel.errorMessage!,
+                    style: const TextStyle(color: Colors.red, fontSize: 12),
+                  ),
+                ),
+              TextFormField(
+                controller: viewModel.phoneController,
+                keyboardType: TextInputType.phone,
+                maxLength: 10,
+                onChanged: (_) => viewModel.notifyListeners(),
+                decoration: InputDecoration(
+                  prefixText: '+91 ',
+                  hintText: 'Mobile Number',
+                  errorText: viewModel.phoneError,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  counterText: '',
                 ),
               ),
-            TextFormField(
-              controller: viewModel.phoneController,
-              keyboardType: TextInputType.phone,
-              maxLength: 10,
-              onChanged: (_) => viewModel.notifyListeners(),
-              decoration: InputDecoration(
-                prefixText: '+91 ',
-                hintText: 'Mobile Number',
-                errorText: viewModel.phoneError,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                counterText: '',
-              ),
-            ),
-            _buildTermsAndConditions(viewModel),
-            _buildNextButton(viewModel),
-          ],
+              _buildTermsAndConditions(viewModel),
+              _buildNextButton(viewModel),
+            ],
+          ),
         ),
       ),
     );
