@@ -15,15 +15,20 @@ A Flutter application for OruPhones internship assignment.
 - Added authentication check
 - Added API service integration
 - Added state management with Stacked
+- Added Firebase initialization and notification permissions
 - Implemented navigation logic
 
 ### Project Structure
 ```
 lib/
+├── services/
+│   ├── auth_service.dart
+│   └── firebase_service.dart
 ├── ui/
 │   └── views/
 │       └── splash/
-│           └── splash_view.dart
+│           ├── splash_view.dart
+│           └── splash_viewmodel.dart
 └── main.dart
 
 assets/
