@@ -1,0 +1,102 @@
+﻿Flutter Internship Assessment – OruPhones
+This assignment is designed to evaluate your Flutter development skills and problem-solving abilities. The task closely resembles features from our OruPhones app, available on the App Store and Play Store. You may refer to the OruPhones app as a reference while completing the assignment.
+
+
+Figma Design Link
+Figma Designs Link
+
+
+Requirements
+1. Splash Screen
+* The splash screen should check if the user is already authenticated. If authenticated, persist the authentication state using the necessary APIs.
+* Regardless of authentication status, always navigate to the Home Screen after completing the required asynchronous tasks.
+* Exception: If the logged-in user is new and has not updated their name, navigate to the Confirm Name Screen instead of the Home Screen.
+* Request necessary permissions, such as Firebase push notifications.
+
+
+2. Authentication Screens & Bottom Sheets
+The authentication flow should be implemented both as standalone screens and bottom sheets inside the Home Screen (for cases where authentication is triggered within the app, such as through product card-like buttons). The same logic and code should be reused for both to ensure modularity.
+a. Login OTP Screen
+* Allows users to enter their phone number and generate an OTP for authentication.
+* The "Terms and Conditions" button can have an empty void action
+b. Verify OTP Screen
+* Allows users to enter the received OTP and complete authentication.
+* The "Terms and Conditions" button can have an empty void action.
+* If the authenticated user is new (i.e., name is empty), navigate to the Confirm Name Screen. Otherwise, navigate to the Home Screen.
+c. Confirm Name Screen
+* If the user is new and has not set a name, display this screen.
+* Only after the user enters a non-empty name should they be allowed to navigate to the Home Screen.
+* During authentication state persistence in the Splash Screen, if the user has signed up but has not updated their name, they should be redirected to the Confirm Name Screen instead of the Home Screen.
+
+
+3. Home Screen
+The Home Screen consists of multiple individual components. You are required to complete the UI of all components. However, some components may contain empty void actions, please keep an eye on the comments near components.
+a. Scrolling Behavior:
+* The scrolling behavior on the Home Screen should match the current OruPhones App.
+* The Figma prototype may have some issues, so ensure that elements like which app bar components hide and which stick are correctly implemented by referring to the OruPhones App.
+b. Product Cards & Pagination:
+* The Product Cards List should support pagination.
+* When the user reaches the end of the page, new products should be fetched, and a loading UI/UX should be displayed (similar to the Best Deals Page in the current OruPhones App).
+c. Liked Listings:
+* If a user has liked listings, those product card heart icons should be red-filled.
+* You will receive the user’s liked listings during authentication.
+* If user is not logged in and if like button is clicked then login bottom sheet’s should be opened and after successful login the respective product should be liked
+d. Cyclic Dummy Product Cards:
+* In the product grid, after every 7th listing, a set of dummy product cards should appear in a cyclic rotation.
+
+
+4. Firebase Push Notifications
+* Implement Firebase Cloud Messaging (FCM) to handle push notifications.
+* Request notification permissions during the Splash Screen.
+* Ensure that notifications work when the app is both foreground and background.
+
+
+Bonus Points Criteria 🎯
+* Stacked State Management
+* If you can implement the filters and sorting functionality in Home Screen with the UI and API integration, that will be a huge bonus for your selection.
+* Proper Caching of Images & Cache Handling
+* Effective Layout & Grid Implementation in Home Screen to Prevent Crashes with Large Data
+
+
+Technical Guidelines
+* State Management:
+   * Avoid using setState for state management.
+   * Preferred options:
+      * Provider ✅
+      * Bloc ✅
+      * Stacked State Management ✅ (Bonus points if used!)
+* Architecture & Code Quality:
+   * Follow a standard architecture and maintain a proper file structure.
+   * Create reusable components to avoid repetitive code.
+* Error Handling:
+   * Implement proper error handling for HTTP APIs.
+* UI/UX:
+   * Ensure smooth UI/UX with responsive design.
+
+
+Submission Guidelines
+✅ GitHub Repository
+* Maintain a GitHub repository from the start.
+* Follow proper commit practices throughout the development process.
+* The assignment submission deadline is February 13, 2025. However, in case of unavoidable issues, submissions will be accepted until February 15, 2025.
+✅ README File
+Your README.md file should include:
+* State management approach used
+* Architecture followed
+* Steps to set up and run the project
+✅ App Recording & APK
+* Record a video demo of the working app.
+* Upload the video recording and Android release APK to Google Drive and share the link during submission.
+
+
+Contact Details
+If you face any issues regarding Figma designs, APIs, or functionality, please reach out to Abhinav or Sourabh. However, before doing so, make sure you have researched and attempted a solution yourself.
+⚠️ Important: Repetitive emails, calls, or messages for basic doubts may negatively impact your chances of getting hired.
+Primary Contact (Abhinav)
+Email : abhinav@oruphones.com
+Mobile : +91-9649876112
+
+
+Secondary Contact (Sourabh)
+Email: sourabh@zenro.co.jp
+Mobile : +91-6375197371
