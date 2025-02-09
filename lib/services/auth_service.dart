@@ -35,6 +35,33 @@ class AuthService {
       );
     }
   }
+
+  Future<ApiResponse<AuthResponse>> validateOtp({
+    required int countryCode,
+    required int mobileNumber,
+    required int otp,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '$_baseUrl/login/otpValidate',
+        data: {
+          'countryCode': countryCode,
+          'mobileNumber': mobileNumber,
+          'otp': otp,
+        },
+      );
+
+      return ApiResponse(
+        success: true,
+        data: AuthResponse.fromJson(response.data),
+      );
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        error: 'Failed to validate OTP: ${e.toString()}',
+      );
+    }
+  }
 }
 
 class AuthResponse {
