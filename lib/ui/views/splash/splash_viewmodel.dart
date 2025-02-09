@@ -30,15 +30,16 @@ class SplashViewModel extends BaseViewModel {
           return;
         } else {
           _navigationService.replaceWith(Routes.homeView);
+          return;
         }
       }
 
-      // Navigate to home screen for all other cases
-      _navigationService.replaceWith('/home-view');
+      // If not authenticated, go to login
+      _navigationService.replaceWith(Routes.loginView);
     } catch (e) {
       print('Error in splash screen: $e');
-      // Navigate to home screen even on error
-      _navigationService.replaceWith('/home-view');
+      // On error, go to login
+      _navigationService.replaceWith(Routes.loginView);
     }
   }
 }
