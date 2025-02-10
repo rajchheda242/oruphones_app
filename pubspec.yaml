@@ -21,6 +21,7 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_messaging: ^14.7.10
   permission_handler: ^11.1.0  # For handling permissions
+  google_fonts: ^6.1.0  # Add this line
 
 dev_dependencies:
   flutter_test:
@@ -33,4 +34,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/animations/
+    - assets/images/oru_phones_logo.png
     - assets/images/logo.png

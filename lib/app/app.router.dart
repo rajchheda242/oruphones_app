@@ -9,14 +9,14 @@ import 'package:flutter/material.dart' as _i7;
 import 'package:flutter/material.dart';
 import 'package:oruphones_app/ui/views/auth/confirm_name_view.dart' as _i5;
 import 'package:oruphones_app/ui/views/auth/login_view.dart' as _i3;
+import 'package:oruphones_app/ui/views/auth/phone_input_view.dart' as _i2;
 import 'package:oruphones_app/ui/views/auth/verify_otp_view.dart' as _i4;
 import 'package:oruphones_app/ui/views/home/home_view.dart' as _i6;
-import 'package:oruphones_app/ui/views/splash/splash_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
 import 'package:stacked_services/stacked_services.dart' as _i8;
 
 class Routes {
-  static const splashView = '/';
+  static const phoneInputView = '/';
 
   static const loginView = '/login-view';
 
@@ -27,7 +27,7 @@ class Routes {
   static const homeView = '/home-view';
 
   static const all = <String>{
-    splashView,
+    phoneInputView,
     loginView,
     verifyOtpView,
     confirmNameView,
@@ -38,8 +38,8 @@ class Routes {
 class StackedRouter extends _i1.RouterBase {
   final _routes = <_i1.RouteDef>[
     _i1.RouteDef(
-      Routes.splashView,
-      page: _i2.SplashView,
+      Routes.phoneInputView,
+      page: _i2.PhoneInputView,
     ),
     _i1.RouteDef(
       Routes.loginView,
@@ -60,9 +60,9 @@ class StackedRouter extends _i1.RouterBase {
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
-    _i2.SplashView: (data) {
+    _i2.PhoneInputView: (data) {
       return _i7.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i2.SplashView(),
+        builder: (context) => const _i2.PhoneInputView(),
         settings: data,
       );
     },
@@ -198,14 +198,14 @@ class ConfirmNameViewArguments {
 }
 
 extension NavigatorStateExtension on _i8.NavigationService {
-  Future<dynamic> navigateToSplashView([
+  Future<dynamic> navigateToPhoneInputView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.splashView,
+    return navigateTo<dynamic>(Routes.phoneInputView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -280,14 +280,14 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithSplashView([
+  Future<dynamic> replaceWithPhoneInputView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return replaceWith<dynamic>(Routes.splashView,
+    return replaceWith<dynamic>(Routes.phoneInputView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

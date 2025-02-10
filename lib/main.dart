@@ -4,6 +4,7 @@ import 'app/app.router.dart';
 import 'app/app.locator.dart';
 import 'services/auth_service.dart';
 import 'services/mock_auth_service.dart';
+import 'ui/views/auth/phone_input_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       navigatorKey: StackedService.navigatorKey,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
+      home: PhoneInputView(), // Start with phone input screen
     );
   }
 }

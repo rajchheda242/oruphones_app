@@ -5,13 +5,14 @@ import '../ui/views/auth/verify_otp_view.dart';
 import '../ui/views/auth/confirm_name_view.dart';
 import '../ui/views/splash/splash_view.dart';
 import '../ui/views/home/home_view.dart';
+import '../ui/views/auth/phone_input_view.dart';
 
 @StackedApp(
   dependencies: [
     LazySingleton(classType: NavigationService),
   ],
   routes: [
-    MaterialRoute(page: SplashView, initial: true),
+    MaterialRoute(page: PhoneInputView, initial: true),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: VerifyOtpView),
     MaterialRoute(page: ConfirmNameView),

@@ -8,10 +8,8 @@
 
 import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
-import 'package:get_it/get_it.dart';
-import '../services/auth_service.dart';
 
-final locator = GetIt.instance;
+final locator = StackedLocator.instance;
 
 Future<void> setupLocator({
   String? environment,
@@ -23,5 +21,4 @@ Future<void> setupLocator({
 
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());
-  locator.registerLazySingleton(() => AuthService());
 }
