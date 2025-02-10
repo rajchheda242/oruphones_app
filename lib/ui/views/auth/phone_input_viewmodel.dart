@@ -1,18 +1,25 @@
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 
 class PhoneInputViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+  final bool isBottomSheet;
+  
+  PhoneInputViewModel({this.isBottomSheet = false});
+  
   String _phoneNumber = '';
   bool _termsAccepted = false;
-  String? _error;
 
   String get phoneNumber => _phoneNumber;
   bool get termsAccepted => _termsAccepted;
   
-  bool get canProceed => _phoneNumber.length >= 10 && _termsAccepted;
-  String? getError() => _error;
+  bool get canProceed => _phoneNumber.length == 10 && _termsAccepted;
 
   void setPhoneNumber(String value) {
     _phoneNumber = value;
+    setError(null);
     notifyListeners();
   }
 
@@ -21,20 +28,36 @@ class PhoneInputViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> validateAndProceed() async {
+  Future<void> navigateToOtpScreen() async {
     try {
-      setBusy(true);
-      if (_phoneNumber.length != 10) {
-        _error = 'Please enter a valid phone number';
+      if (!canProceed) {
+        if (_phoneNumber.length != 10) {
+          setError('Please enter a valid 10-digit phone number');
+        } else if (!_termsAccepted) {
+          setError('Please accept terms and conditions');
+        }
         notifyListeners();
         return;
       }
-      // API call and navigation logic
+
+      setBusy(true);
+      // Here you would typically make an API call to send OTP
+      
+      await _navigationService.navigateToLoginView(
+        isBottomSheet: isBottomSheet,
+        phoneNumber: _phoneNumber,
+      );
     } catch (e) {
-      _error = 'Something went wrong. Please try again.';
+      setError('Something went wrong. Please try again.');
       notifyListeners();
     } finally {
       setBusy(false);
+    }
+  }
+
+  void goBack() {
+    if (isBottomSheet) {
+      _navigationService.back();
     }
   }
 } 

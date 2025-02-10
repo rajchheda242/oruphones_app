@@ -5,6 +5,7 @@ import '../../../services/auth_service.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../ui/views/auth/verify_otp_view.dart';
+import 'dart:async';
 
 class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -12,8 +13,14 @@ class LoginViewModel extends BaseViewModel {
   final phoneController = TextEditingController();
   bool _acceptedTerms = false;
   final bool isBottomSheet;
+  final List<TextEditingController> otpControllers;
+  int _resendTime = 30;
+  Timer? _timer;
 
-  LoginViewModel({this.isBottomSheet = false});
+  LoginViewModel({this.isBottomSheet = false})
+      : otpControllers = List.generate(4, (_) => TextEditingController()) {
+    _startResendTimer();
+  }
 
   String? get phoneError {
     final phone = phoneController.text;
@@ -33,6 +40,12 @@ class LoginViewModel extends BaseViewModel {
       !isBusy &&
       phoneError == null;
 
+  bool get canResend => _resendTime == 0;
+  int get resendTime => _resendTime;
+
+  bool get canVerify => otpControllers.every((controller) => 
+    controller.text.length == 1) && !isBusy;
+
   void setAcceptedTerms(bool? value) {
     _acceptedTerms = value ?? false;
     notifyListeners();
@@ -42,6 +55,33 @@ class LoginViewModel extends BaseViewModel {
   void setError(dynamic message) {
     super.setError(message);
     notifyListeners();
+  }
+
+  void _startResendTimer() {
+    _timer?.cancel();
+    _resendTime = 30;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_resendTime > 0) {
+        _resendTime--;
+        notifyListeners();
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  Future<void> resendOtp() async {
+    if (!canResend) return;
+    
+    try {
+      setBusy(true);
+      // API call to resend OTP would go here
+      _startResendTimer();
+    } catch (e) {
+      setError('Failed to resend OTP');
+    } finally {
+      setBusy(false);
+    }
   }
 
   Future<void> generateOtp() async {
@@ -79,9 +119,44 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
+  void onOtpDigitChanged(int index, String value, dynamic navigationService) {
+    if (value.length == 1 && index < 3) {
+      // Move to next field
+      FocusScope.of(navigationService.navigatorKey.currentContext!)
+          .nextFocus();
+    } else if (value.isEmpty && index > 0) {
+      // Move to previous field
+      FocusScope.of(navigationService.navigatorKey.currentContext!)
+          .previousFocus();
+    }
+  }
+
+  void goBack() {
+    if (isBottomSheet) {
+      _navigationService.back();
+    }
+  }
+
+  Future<void> verifyOtp() async {
+    try {
+      setBusy(true);
+      final otp = otpControllers.map((c) => c.text).join();
+      // TODO: Add API call to verify OTP
+      await _navigationService.navigateToConfirmNameView();
+    } catch (e) {
+      setError('Failed to verify OTP');
+    } finally {
+      setBusy(false);
+    }
+  }
+
   @override
   void dispose() {
     phoneController.dispose();
+    for (var controller in otpControllers) {
+      controller.dispose();
+    }
+    _timer?.cancel();
     super.dispose();
   }
 }

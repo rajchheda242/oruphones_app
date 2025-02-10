@@ -61,18 +61,22 @@ class StackedRouter extends _i1.RouterBase {
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.PhoneInputView: (data) {
+      final args = data.getArgs<PhoneInputViewArguments>(
+        orElse: () => const PhoneInputViewArguments(),
+      );
       return _i7.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i2.PhoneInputView(),
+        builder: (context) => _i2.PhoneInputView(
+            key: args.key, isBottomSheet: args.isBottomSheet),
         settings: data,
       );
     },
     _i3.LoginView: (data) {
-      final args = data.getArgs<LoginViewArguments>(
-        orElse: () => const LoginViewArguments(),
-      );
+      final args = data.getArgs<LoginViewArguments>(nullOk: false);
       return _i7.MaterialPageRoute<dynamic>(
-        builder: (context) =>
-            _i3.LoginView(key: args.key, isBottomSheet: args.isBottomSheet),
+        builder: (context) => _i3.LoginView(
+            key: args.key,
+            isBottomSheet: args.isBottomSheet,
+            phoneNumber: args.phoneNumber),
         settings: data,
       );
     },
@@ -111,8 +115,8 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-class LoginViewArguments {
-  const LoginViewArguments({
+class PhoneInputViewArguments {
+  const PhoneInputViewArguments({
     this.key,
     this.isBottomSheet = false,
   });
@@ -127,7 +131,7 @@ class LoginViewArguments {
   }
 
   @override
-  bool operator ==(covariant LoginViewArguments other) {
+  bool operator ==(covariant PhoneInputViewArguments other) {
     if (identical(this, other)) return true;
     return other.key == key && other.isBottomSheet == isBottomSheet;
   }
@@ -135,6 +139,38 @@ class LoginViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^ isBottomSheet.hashCode;
+  }
+}
+
+class LoginViewArguments {
+  const LoginViewArguments({
+    this.key,
+    this.isBottomSheet = false,
+    required this.phoneNumber,
+  });
+
+  final _i7.Key? key;
+
+  final bool isBottomSheet;
+
+  final String phoneNumber;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "isBottomSheet": "$isBottomSheet", "phoneNumber": "$phoneNumber"}';
+  }
+
+  @override
+  bool operator ==(covariant LoginViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key &&
+        other.isBottomSheet == isBottomSheet &&
+        other.phoneNumber == phoneNumber;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ isBottomSheet.hashCode ^ phoneNumber.hashCode;
   }
 }
 
@@ -198,14 +234,18 @@ class ConfirmNameViewArguments {
 }
 
 extension NavigatorStateExtension on _i8.NavigationService {
-  Future<dynamic> navigateToPhoneInputView([
+  Future<dynamic> navigateToPhoneInputView({
+    _i7.Key? key,
+    bool isBottomSheet = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.phoneInputView,
+        arguments:
+            PhoneInputViewArguments(key: key, isBottomSheet: isBottomSheet),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -215,6 +255,7 @@ extension NavigatorStateExtension on _i8.NavigationService {
   Future<dynamic> navigateToLoginView({
     _i7.Key? key,
     bool isBottomSheet = false,
+    required String phoneNumber,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -222,7 +263,8 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.loginView,
-        arguments: LoginViewArguments(key: key, isBottomSheet: isBottomSheet),
+        arguments: LoginViewArguments(
+            key: key, isBottomSheet: isBottomSheet, phoneNumber: phoneNumber),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -280,14 +322,18 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithPhoneInputView([
+  Future<dynamic> replaceWithPhoneInputView({
+    _i7.Key? key,
+    bool isBottomSheet = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.phoneInputView,
+        arguments:
+            PhoneInputViewArguments(key: key, isBottomSheet: isBottomSheet),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -297,6 +343,7 @@ extension NavigatorStateExtension on _i8.NavigationService {
   Future<dynamic> replaceWithLoginView({
     _i7.Key? key,
     bool isBottomSheet = false,
+    required String phoneNumber,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -304,7 +351,8 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.loginView,
-        arguments: LoginViewArguments(key: key, isBottomSheet: isBottomSheet),
+        arguments: LoginViewArguments(
+            key: key, isBottomSheet: isBottomSheet, phoneNumber: phoneNumber),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

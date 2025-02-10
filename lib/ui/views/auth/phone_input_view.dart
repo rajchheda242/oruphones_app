@@ -6,7 +6,12 @@ import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PhoneInputView extends StackedView<PhoneInputViewModel> {
-  const PhoneInputView({Key? key}) : super(key: key);
+  final bool isBottomSheet;
+  
+  const PhoneInputView({
+    Key? key,
+    this.isBottomSheet = false,
+  }) : super(key: key);
 
   @override
   Widget builder(BuildContext context, PhoneInputViewModel viewModel, Widget? child) {
@@ -126,6 +131,7 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                       border: InputBorder.none,
                                       isDense: true,
                                       contentPadding: EdgeInsets.zero,
+                                      errorText: viewModel.error('phone'),
                                     ),
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
@@ -211,33 +217,46 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                             width: 358,
                             height: 51,
                             decoration: BoxDecoration(
-                              color: Color(0xFF3F3E8F),
+                              color: viewModel.canProceed 
+                                ? Color(0xFF3F3E8F)
+                                : Color(0xFF3F3E8F).withOpacity(0.5),
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(
                                 color: Color(0xFFB1B1B1),
                                 width: 1,
                               ),
                             ),
-                            child: Center(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Next',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      height: 27/18,
-                                      color: Color(0xFFFFFFFF),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    size: 24,
-                                    color: Color(0xFFFFFFFF),
-                                  ),
-                                ],
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: viewModel.canProceed 
+                                  ? () => viewModel.navigateToOtpScreen()
+                                  : null,
+                                borderRadius: BorderRadius.circular(4),
+                                child: Center(
+                                  child: viewModel.isBusy
+                                    ? CircularProgressIndicator(color: Colors.white)
+                                    : Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'Next',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              height: 27/18,
+                                              color: Color(0xFFFFFFFF),
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            size: 24,
+                                            color: Color(0xFFFFFFFF),
+                                          ),
+                                        ],
+                                      ),
+                                ),
                               ),
                             ),
                           ),
@@ -253,7 +272,7 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                 right: 0,
                 child: IconButton(
                   icon: Icon(Icons.close),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => viewModel.goBack(),
                   color: Color(0xFF3F3E8F),
                   padding: EdgeInsets.zero,
                   constraints: BoxConstraints(),
@@ -268,5 +287,6 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
   }
 
   @override
-  PhoneInputViewModel viewModelBuilder(BuildContext context) => PhoneInputViewModel();
+  PhoneInputViewModel viewModelBuilder(BuildContext context) => 
+    PhoneInputViewModel(isBottomSheet: isBottomSheet);
 } 
