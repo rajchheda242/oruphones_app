@@ -5,6 +5,7 @@ import 'app/app.locator.dart';
 import 'services/auth_service.dart';
 import 'services/mock_auth_service.dart';
 import 'ui/views/auth/phone_input_view.dart';
+import 'ui/views/landing/landing_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
       ),
-      onGenerateRoute: StackedRouter().onGenerateRoute,
+      home: const LandingView(),
+      // onGenerateRoute: StackedRouter().onGenerateRoute, // Comment this out temporarily
       navigatorKey: StackedService.navigatorKey,
     );
   }

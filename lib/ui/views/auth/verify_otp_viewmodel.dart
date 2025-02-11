@@ -37,9 +37,9 @@ class VerifyOtpViewModel extends BaseViewModel {
 
   Future<void> resendOtp() async {
     if (!canResend) return;
-
     try {
-      await AuthService().generateOtp(
+      final authService = locator<AuthService>();
+      await authService.generateOtp(
         countryCode: 91,
         mobileNumber: int.parse(phoneNumber),
       );
@@ -59,7 +59,8 @@ class VerifyOtpViewModel extends BaseViewModel {
       setBusy(true);
       final otp = int.parse(otpControllers.map((c) => c.text).join());
 
-      final result = await AuthService().validateOtp(
+      final authService = locator<AuthService>();
+      final result = await authService.validateOtp(
         countryCode: 91,
         mobileNumber: int.parse(phoneNumber),
         otp: otp,

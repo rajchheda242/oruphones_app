@@ -22,7 +22,7 @@ class ConfirmNameViewModel extends BaseViewModel {
       setBusy(true);
       errorMessage = null;
 
-      final result = await AuthService().updateUserName(
+      final result = await locator<AuthService>().updateUserName(
         countryCode: 91,
         userName: nameController.text.trim(),
       );
