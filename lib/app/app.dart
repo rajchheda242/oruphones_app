@@ -20,7 +20,6 @@ import '../ui/views/auth/phone_input_view.dart';
     MaterialRoute(page: VerifyOtpView),
     MaterialRoute(page: ConfirmNameView),
     MaterialRoute(page: HomeView),
-    // TODO: Add HomeView route
   ],
 )
 class App {}

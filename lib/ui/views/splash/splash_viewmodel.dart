@@ -7,42 +7,35 @@ import '../../../services/firebase_service.dart';
 
 class SplashViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _authService = locator<AuthService>();
 
   Future<void> checkAuthStatus() async {
     try {
-      // Try Firebase setup but don't block app functionality
-      try {
-        await FirebaseService.initialize();
-        await FirebaseService.setupNotifications();
-      } catch (e) {
-        print('Firebase setup error: $e');
-        // Continue with app flow even if Firebase fails
-      }
+      setBusy(true);
+      
+      // Check authentication state
+      final response = await _authService.checkLoginStatus();
 
+      // Add delay for splash animation
       await Future.delayed(const Duration(seconds: 3));
 
-      final response = await AuthService().checkLoginStatus();
-
-      // Store authentication state if user is authenticated
       if (response.isAuthenticated) {
-        // TODO: Persist authentication state
-
         if (response.user.name.isEmpty) {
-          // Navigate to confirm name screen if name is empty
-          _navigationService.replaceWith(Routes.confirmNameView);
-          return;
+          // New user - needs to set name
+          await _navigationService.replaceWith(Routes.confirmNameView);
         } else {
-          _navigationService.replaceWith(Routes.homeView);
-          return;
+          // Existing user - go to home
+          await _navigationService.replaceWith(Routes.homeView);
         }
+      } else {
+        // Not authenticated - go to phone input
+        await _navigationService.replaceWith(Routes.phoneInputView);
       }
-
-      // If not authenticated, go to login
-      _navigationService.replaceWith(Routes.loginView);
     } catch (e) {
-      print('Error in splash screen: $e');
-      // On error, go to login
-      _navigationService.replaceWith(Routes.loginView);
+      // On error, go to phone input
+      await _navigationService.replaceWith(Routes.phoneInputView);
+    } finally {
+      setBusy(false);
     }
   }
 }

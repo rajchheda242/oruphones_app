@@ -124,19 +124,33 @@ class AuthService {
     required String userName,
   }) async {
     try {
+      if (userName.trim().isEmpty) {
+        return ApiResponse(
+          success: false,
+          error: 'Name cannot be empty',
+        );
+      }
+
       final response = await _dio.post(
         '$_baseUrl/update',
         data: {
           'countryCode': countryCode,
-          'userName': userName,
+          'userName': userName.trim(),
         },
       );
+
+      if (response.statusCode != 200) {
+        return ApiResponse(
+          success: false,
+          error: 'Failed to update name: ${response.statusMessage}',
+        );
+      }
 
       return ApiResponse(success: true);
     } catch (e) {
       return ApiResponse(
         success: false,
-        error: 'Failed to update name: ${e.toString()}',
+        error: 'Network error: ${e.toString()}',
       );
     }
   }

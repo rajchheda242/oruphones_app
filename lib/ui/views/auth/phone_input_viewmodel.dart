@@ -1,7 +1,9 @@
+import 'package:oruphones_app/ui/views/auth/phone_input_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
+import 'package:flutter/material.dart';
 
 class PhoneInputViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -59,5 +61,14 @@ class PhoneInputViewModel extends BaseViewModel {
     if (isBottomSheet) {
       _navigationService.back();
     }
+  }
+
+  Future<void> showAsBottomSheet(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => PhoneInputView(isBottomSheet: true),
+    );
   }
 } 
