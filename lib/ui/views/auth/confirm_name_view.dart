@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'confirm_name_viewmodel.dart';
+import '../../widgets/logo_welcome_header.dart';
 
 class ConfirmNameView extends StackedView<ConfirmNameViewModel> {
   final bool isBottomSheet;
@@ -11,34 +13,153 @@ class ConfirmNameView extends StackedView<ConfirmNameViewModel> {
   }) : super(key: key);
 
   @override
-  Widget builder(
-      BuildContext context, ConfirmNameViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, ConfirmNameViewModel viewModel, Widget? child) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: isBottomSheet
-              ? const BorderRadius.vertical(top: Radius.circular(16))
-              : null,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: Stack(
             children: [
-              if (isBottomSheet) _buildCloseButton(context),
-              _buildLogo(),
-              _buildTitle(),
-              if (viewModel.errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Text(
-                    viewModel.errorMessage!,
-                    style: const TextStyle(color: Colors.red, fontSize: 12),
-                  ),
+              Container(
+                color: Color(0xFFFFFFFF),
+                width: 358,
+                height: 775,
+                margin: const EdgeInsets.only(left: 16),
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: Column(
+                  children: [
+                    SizedBox(height: 49),
+                    LogoWelcomeHeader(
+                      welcomeText: 'Welcome',
+                      subtitleText: 'Sign in to continue',
+                    ),
+                    SizedBox(height: 100), // Same gap as phone input
+                    Container(
+                      width: 358,
+                      height: 71,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 159,
+                            height: 19,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Please Tell Us Your Name',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 18.96/12,
+                                    letterSpacing: 0,
+                                    color: Color(0xFF282828),
+                                  ),
+                                ),
+                                Text(
+                                  ' *',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 18.96/12,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: 358,
+                            height: 52,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 15,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFFFFFF),
+                              border: Border.all(
+                                color: Color(0xFFCCCCCC),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: TextFormField(
+                              controller: viewModel.nameController,
+                              decoration: InputDecoration(
+                                hintText: 'Name',
+                                border: InputBorder.none,
+                                isDense: true,
+                                contentPadding: EdgeInsets.zero,
+                                errorText: viewModel.error('name'),
+                              ),
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF282828),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 100), // Gap before button
+                    Container(
+                      width: 358,
+                      height: 51,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF3F3E8F),
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                          color: Color(0xFFB1B1B1),
+                          width: 1,
+                        ),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: viewModel.canConfirm ? viewModel.confirmName : null,
+                          borderRadius: BorderRadius.circular(4),
+                          child: Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Confirm Name',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    height: 27/18,
+                                    letterSpacing: 0,
+                                    color: Color(0xFFFFFFFF),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  size: 24,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              _buildNameInput(viewModel),
-              _buildConfirmButton(viewModel),
+              ),
+              Positioned(
+                top: 24,
+                right: 0,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () => viewModel.goBack(),
+                  color: Color(0xFF3F3E8F),
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  iconSize: 24,
+                ),
+              ),
             ],
           ),
         ),
@@ -46,74 +167,7 @@ class ConfirmNameView extends StackedView<ConfirmNameViewModel> {
     );
   }
 
-  Widget _buildCloseButton(BuildContext context) => Align(
-        alignment: Alignment.topRight,
-        child: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.pop(context),
-        ),
-      );
-
-  Widget _buildLogo() => Image.asset('assets/images/logo.png', height: 40);
-
-  Widget _buildTitle() => Column(
-        children: const [
-          Text(
-            'Welcome',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1F2937),
-            ),
-          ),
-          Text(
-            'SignUp to continue',
-            style: TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
-          ),
-          SizedBox(height: 32),
-        ],
-      );
-
-  Widget _buildNameInput(ConfirmNameViewModel viewModel) => TextFormField(
-        controller: viewModel.nameController,
-        decoration: InputDecoration(
-          labelText: 'Please Tell Us Your Name',
-          labelStyle: const TextStyle(color: Color(0xFF6B7280)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          suffixText: '*',
-          suffixStyle: const TextStyle(color: Colors.red),
-        ),
-      );
-
-  Widget _buildConfirmButton(ConfirmNameViewModel viewModel) => Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: viewModel.canConfirm ? viewModel.confirmName : null,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4318FF),
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: viewModel.isBusy
-                ? const CircularProgressIndicator(color: Colors.white)
-                : const Text(
-                    'Confirm Name',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-          ),
-        ),
-      );
-
   @override
   ConfirmNameViewModel viewModelBuilder(BuildContext context) =>
-      ConfirmNameViewModel();
+      ConfirmNameViewModel(isBottomSheet: isBottomSheet);
 }

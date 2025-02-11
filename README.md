@@ -87,7 +87,7 @@ assets/
 ## Setup Instructions
 1. Clone the repository
 2. Run `flutter pub get`
-3. Configure Firebase project
+3. Run `flutter pub run build_runner build` to generate route files
 4. Run the app using `flutter run`
 
 ## Dependencies
@@ -100,3 +100,28 @@ assets/
 
 ## Development Status
 working
+
+## Architecture & State Management
+- Using **Stacked** state management for MVVM architecture
+- Clean separation of concerns with ViewModels handling business logic
+- Reusable components for consistent UI elements
+
+## Authentication Flow
+- Complete authentication flow with phone number verification
+- OTP verification system
+- Name confirmation for new users
+- Supports both full-screen and bottom sheet modes
+- Persistent authentication state
+
+## Key Features
+- Phone number authentication
+- OTP verification
+- User name confirmation
+- Persistent login state
+- Bottom sheet support for in-app authentication
+
+## Technical Details
+- Flutter SDK: >=3.0.0 <4.0.0
+- Stacked State Management
+- Firebase Integration
+- Clean Architecture

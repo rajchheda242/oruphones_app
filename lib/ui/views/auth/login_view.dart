@@ -250,6 +250,18 @@ class LoginView extends StackedView<LoginViewModel> {
                   iconSize: 24,
                 ),
               ),
+              Positioned(
+                top: 24,
+                left: 0,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () => viewModel.goBack(),
+                  color: Color(0xFF3F3E8F),
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  iconSize: 24,
+                ),
+              ),
             ],
           ),
         ),

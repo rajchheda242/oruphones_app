@@ -119,15 +119,18 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
-  void onOtpDigitChanged(int index, String value, dynamic navigationService) {
-    if (value.length == 1 && index < 3) {
-      // Move to next field
-      FocusScope.of(navigationService.navigatorKey.currentContext!)
-          .nextFocus();
+  void onOtpDigitChanged(int index, String value, BuildContext context) {
+    if (value.length == 1) {
+      if (index < 3) {
+        // Move to next field
+        FocusScope.of(context).nextFocus();
+      } else {
+        // Last field, hide keyboard
+        FocusScope.of(context).unfocus();
+      }
     } else if (value.isEmpty && index > 0) {
       // Move to previous field
-      FocusScope.of(navigationService.navigatorKey.currentContext!)
-          .previousFocus();
+      FocusScope.of(context).previousFocus();
     }
   }
 

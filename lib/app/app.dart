@@ -14,8 +14,9 @@ import '../ui/views/auth/phone_input_view.dart';
     LazySingleton(classType: AuthService),
   ],
   routes: [
-    MaterialRoute(page: PhoneInputView, initial: true),
-    MaterialRoute(page: LoginView, path: ':phoneNumber'),
+    MaterialRoute(page: SplashView, initial: true),
+    MaterialRoute(page: PhoneInputView),
+    MaterialRoute(page: LoginView),
     MaterialRoute(page: VerifyOtpView),
     MaterialRoute(page: ConfirmNameView),
     MaterialRoute(page: HomeView),

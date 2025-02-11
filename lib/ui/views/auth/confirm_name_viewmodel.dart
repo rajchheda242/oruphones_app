@@ -9,6 +9,9 @@ class ConfirmNameViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final nameController = TextEditingController();
   String? errorMessage;
+  final bool isBottomSheet;
+
+  ConfirmNameViewModel({this.isBottomSheet = false});
 
   bool get canConfirm => nameController.text.isNotEmpty;
 
@@ -36,6 +39,12 @@ class ConfirmNameViewModel extends BaseViewModel {
       notifyListeners();
     } finally {
       setBusy(false);
+    }
+  }
+
+  void goBack() {
+    if (isBottomSheet) {
+      _navigationService.back();
     }
   }
 
