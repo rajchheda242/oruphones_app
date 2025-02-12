@@ -3,6 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'landing_viewmodel.dart';
 import 'widgets/menu_grid_item.dart';
 import 'widgets/menu_item.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LandingView extends StackedView<LandingViewModel> {
   const LandingView({Key? key}) : super(key: key);
@@ -125,9 +126,8 @@ class LandingView extends StackedView<LandingViewModel> {
                                       child: Text(
                                         'Login/SignUp',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: GoogleFonts.poppins(
                                           color: Colors.white,
-                                          fontFamily: 'Poppins',
                                           fontSize: scaled(15.0),
                                           fontWeight: FontWeight.w500,
                                           letterSpacing: 0,
@@ -172,9 +172,8 @@ class LandingView extends StackedView<LandingViewModel> {
                                         child: Center(
                                           child: Text(
                                             'Sell Your Phone',
-                                            style: TextStyle(
+                                            style: GoogleFonts.poppins(
                                               color: Colors.black,
-                                              fontFamily: 'Poppins',
                                               fontSize: scaled(15.0),
                                               fontWeight: FontWeight.w500,
                                               height: 1.5,
