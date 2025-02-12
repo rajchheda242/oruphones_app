@@ -30,4 +30,38 @@ class HomeViewModel extends BaseViewModel {
       ),
     );
   }
+
+  void onSearchTap(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.9,
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: 'Search phones with make, model...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(11.63),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void onMicTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(
+        content: Text('Voice search coming soon!'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
 }

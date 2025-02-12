@@ -48,3 +48,5 @@ flutter:
     - assets/icons/logout.png
     - assets/icons/menu.png
     - assets/icons/location.png
+    - assets/icons/search.png
+    - assets/icons/mic.png
