@@ -51,3 +51,9 @@ flutter:
     - assets/icons/search.png
     - assets/icons/mic.png
     - assets/icons/new.png
+    - assets/banners/banner1.png
+    - assets/banners/banner2.png
+    - assets/banners/banner3.png
+    - assets/banners/banner4.png
+    - assets/banners/banner5.png
+    - assets/banners/  # Add this line

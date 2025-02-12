@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'home_viewmodel.dart';
 import 'widgets/home_menu_bar.dart';
 import 'widgets/phone_nav_button.dart';
+import 'widgets/phone_banners.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
   const HomeView({Key? key}) : super(key: key);
@@ -154,6 +155,8 @@ class HomeView extends StackedView<HomeViewModel> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10),
+                      const PhoneBanners(),
                     ],
                   ),
                 ),
