@@ -8,17 +8,21 @@ class HomeView extends StackedView<HomeViewModel> {
 
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final designWidth = 390.0;
+    final scale = screenWidth / designWidth;
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        width: 390,
-        margin: const EdgeInsets.only(top: 47),
+        width: screenWidth,
+        margin: EdgeInsets.only(top: 47 * scale),
         child: Column(
           children: [
             const HomeMenuBar(),
             Expanded(
               child: SafeArea(
-                top: false, // Since MenuBar is outside SafeArea
+                top: false,
                 child: Center(
                   child: Text('Home Content'),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 import '../home_viewmodel.dart';
 
@@ -30,20 +31,15 @@ class HomeMenuBar extends ViewModelWidget<HomeViewModel> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: Row(
               children: [
-                // Menu Icon
                 GestureDetector(
                   onTap: () => viewModel.onMenuTap(context),
-                  child: SizedBox(
+                  child: const SizedBox(
                     width: 20,
                     height: 16,
-                    child: Image.asset(
-                      'assets/icons/menu.png',
-                      fit: BoxFit.contain,
-                    ),
+                    child: Icon(Icons.menu, size: 24),
                   ),
                 ),
                 const SizedBox(width: 12),
-                // Logo
                 SizedBox(
                   width: 50,
                   height: 24,
@@ -55,8 +51,51 @@ class HomeMenuBar extends ViewModelWidget<HomeViewModel> {
               ],
             ),
           ),
-          // Right section (to be implemented)
-          const SizedBox(), // Placeholder for right section
+          // Right section with location and login
+          Container(
+            width: 152,
+            height: 48,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'India',
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xFF121212),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Image.asset(
+                  'assets/icons/location.png',
+                  width: 16,
+                  height: 16,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(width: 12),
+                Container(
+                  width: 66,
+                  height: 29,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF6C018),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                  child: Center(
+                    child: Text(
+                      'Login',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF121212),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
