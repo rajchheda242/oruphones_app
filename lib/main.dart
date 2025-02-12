@@ -6,6 +6,7 @@ import 'services/auth_service.dart';
 import 'services/mock_auth_service.dart';
 import 'ui/views/auth/phone_input_view.dart';
 import 'ui/views/landing/landing_view.dart';
+import 'ui/views/splash/splash_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,8 +30,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const LandingView(),
-      // onGenerateRoute: StackedRouter().onGenerateRoute, // Comment this out temporarily
+      home: const SplashView(),
+      onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorKey: StackedService.navigatorKey,
     );
   }

@@ -7,36 +7,52 @@ import '../../../services/auth_service.dart';
 
 class ConfirmNameViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _authService = locator<AuthService>();
   final nameController = TextEditingController();
-  String? errorMessage;
   final bool isBottomSheet;
 
   ConfirmNameViewModel({this.isBottomSheet = false});
 
-  bool get canConfirm => nameController.text.isNotEmpty;
+  bool get canConfirm => nameController.text.trim().isNotEmpty;
+
+  String? getFieldError(String field) {
+    if (field == 'name' && nameController.text.isEmpty) {
+      return 'Name is required';
+    }
+    return null;
+  }
 
   Future<void> confirmName() async {
     if (!canConfirm) return;
 
     try {
       setBusy(true);
-      errorMessage = null;
-
-      final result = await locator<AuthService>().updateUserName(
+      final result = await _authService.updateUserName(
         countryCode: 91,
         userName: nameController.text.trim(),
       );
 
-      if (!result.success) {
-        errorMessage = result.error;
-        notifyListeners();
-        return;
+      if (result.success) {
+        // Update user name in auth state
+        if (_authService.currentUser != null) {
+          _authService.updateAuthState(
+            AuthResponse(
+              isAuthenticated: true,
+              user: User(
+                name: nameController.text.trim(),
+                joinDate: _authService.currentUser!.joinDate,
+                profileImage: _authService.currentUser!.profileImage,
+              ),
+            ),
+          );
+        }
+        // Navigate back to landing page (now in logged-in state)
+        await _navigationService.clearStackAndShow(Routes.landingView);
+      } else {
+        setError(result.error ?? 'Failed to update name');
       }
-
-      _navigationService.replaceWith(Routes.homeView);
     } catch (e) {
-      errorMessage = 'Something went wrong. Please try again.';
-      notifyListeners();
+      setError('Something went wrong');
     } finally {
       setBusy(false);
     }
@@ -45,6 +61,8 @@ class ConfirmNameViewModel extends BaseViewModel {
   void goBack() {
     if (isBottomSheet) {
       _navigationService.back();
+    } else {
+      _navigationService.clearStackAndShow(Routes.landingView);
     }
   }
 

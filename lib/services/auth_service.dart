@@ -1,9 +1,15 @@
 import 'package:dio/dio.dart';
 import '../core/models/api_response.dart';
+import 'package:flutter/foundation.dart';
 
-class AuthService {
+class AuthService extends ChangeNotifier {
   final _dio = Dio();
   final _baseUrl = 'https://40.90.224.241:5000';
+  bool _isLoggedIn = false;
+  User? _currentUser;
+
+  bool get isLoggedIn => _isLoggedIn;
+  User? get currentUser => _currentUser;
 
   AuthService() {
     _dio.options.connectTimeout = const Duration(seconds: 5);
@@ -27,10 +33,10 @@ class AuthService {
       return AuthResponse.fromJson(response.data);
     } on DioException catch (e) {
       print('Login status error: $e');
-      return AuthResponse(isAuthenticated: false, user: User(name: ''));
+      return AuthResponse(isAuthenticated: false, user: User(name: '', joinDate: ''));
     } catch (e) {
       print('Unexpected login status error: $e');
-      return AuthResponse(isAuthenticated: false, user: User(name: ''));
+      return AuthResponse(isAuthenticated: false, user: User(name: '', joinDate: ''));
     }
   }
 
@@ -154,6 +160,29 @@ class AuthService {
       );
     }
   }
+
+  Future<void> initialize() async {
+    try {
+      final response = await checkLoginStatus();
+      _isLoggedIn = response.isAuthenticated;
+      _currentUser = response.user;
+    } catch (e) {
+      _isLoggedIn = false;
+      _currentUser = null;
+    }
+  }
+
+  void updateAuthState(AuthResponse response) {
+    _isLoggedIn = response.isAuthenticated;
+    _currentUser = response.user;
+    notifyListeners();
+  }
+
+  void logout() {
+    _isLoggedIn = false;
+    _currentUser = null;
+    notifyListeners();
+  }
 }
 
 class AuthResponse {
@@ -172,10 +201,20 @@ class AuthResponse {
 
 class User {
   final String name;
+  final String joinDate;
+  final String? profileImage;
 
-  User({required this.name});
+  User({
+    required this.name,
+    required this.joinDate,
+    this.profileImage,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    return User(name: json['userName'] ?? '');
+    return User(
+      name: json['userName'] ?? '',
+      joinDate: json['joinDate'] ?? '',
+      profileImage: json['profileImage'],
+    );
   }
 }

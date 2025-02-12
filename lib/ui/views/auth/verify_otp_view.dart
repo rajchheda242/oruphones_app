@@ -16,6 +16,20 @@ class VerifyOtpView extends StackedView<VerifyOtpViewModel> {
   Widget builder(
       BuildContext context, VerifyOtpViewModel viewModel, Widget? child) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: viewModel.onBackPressed,
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.black),
+            onPressed: viewModel.onClosePressed,
+          ),
+        ],
+      ),
       body: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -28,7 +42,7 @@ class VerifyOtpView extends StackedView<VerifyOtpViewModel> {
           child: Column(
             mainAxisSize: isBottomSheet ? MainAxisSize.min : MainAxisSize.max,
             children: [
-              if (isBottomSheet) _buildCloseButton(context),
+              if (isBottomSheet) _buildCloseButton(context, viewModel),
               _buildLogo(),
               _buildTitle(),
               _buildOtpDescription(),
@@ -42,13 +56,14 @@ class VerifyOtpView extends StackedView<VerifyOtpViewModel> {
     );
   }
 
-  Widget _buildCloseButton(BuildContext context) => Align(
-        alignment: Alignment.topRight,
-        child: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.pop(context),
-        ),
-      );
+  Widget _buildCloseButton(BuildContext context, VerifyOtpViewModel viewModel) => Align(
+    alignment: Alignment.topLeft,
+    child: IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: viewModel.onBackPressed,
+      
+    ),
+  );
 
   Widget _buildLogo() => Image.asset('assets/images/logo.png', height: 40);
 
@@ -118,7 +133,7 @@ class VerifyOtpView extends StackedView<VerifyOtpViewModel> {
   Widget _buildVerifyButton(VerifyOtpViewModel viewModel) => SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: viewModel.canVerify ? viewModel.verifyOtp : null,
+          onPressed: viewModel.canVerify ? viewModel.onVerifyPressed : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF4318FF),
             padding: const EdgeInsets.symmetric(vertical: 16),

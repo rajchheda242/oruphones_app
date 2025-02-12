@@ -34,6 +34,14 @@ flutter:
   uses-material-design: true
   assets:
     - assets/animations/
-    - assets/images/oru_phones_logo.png
-    - assets/images/logo.png
+    - assets/images/
     - assets/icons/
+    - assets/images/logo.png
+    - assets/images/user.png
+    - assets/icons/how_to_buy.png
+    - assets/icons/how_to_sell.png
+    - assets/icons/faqs.png
+    - assets/icons/about_us.png
+    - assets/icons/privacy_policy.png
+    - assets/icons/return_policy.png
+    - assets/icons/oru_guide.png

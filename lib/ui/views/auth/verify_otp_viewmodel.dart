@@ -13,6 +13,7 @@ class VerifyOtpViewModel extends BaseViewModel {
   int _resendTime = 30;
   Timer? _timer;
   final _navigationService = locator<NavigationService>();
+  final _authService = locator<AuthService>();
 
   VerifyOtpViewModel(this.phoneNumber)
       : otpControllers = List.generate(4, (_) => TextEditingController()) {
@@ -38,8 +39,7 @@ class VerifyOtpViewModel extends BaseViewModel {
   Future<void> resendOtp() async {
     if (!canResend) return;
     try {
-      final authService = locator<AuthService>();
-      await authService.generateOtp(
+      await _authService.generateOtp(
         countryCode: 91,
         mobileNumber: int.parse(phoneNumber),
       );
@@ -52,36 +52,38 @@ class VerifyOtpViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> verifyOtp() async {
+  Future<void> onVerifyPressed() async {
     if (!canVerify) return;
-
+    
     try {
       setBusy(true);
       final otp = int.parse(otpControllers.map((c) => c.text).join());
-
-      final authService = locator<AuthService>();
-      final result = await authService.validateOtp(
+      final response = await _authService.validateOtp(
         countryCode: 91,
         mobileNumber: int.parse(phoneNumber),
         otp: otp,
       );
 
-      if (!result.success) {
-        setError(result.error ?? 'Verification failed');
-        return;
+      if (response.success && response.data != null) {
+        _authService.updateAuthState(response.data!);
+        
+        if (response.data!.user.name.isEmpty) {
+          await _navigationService.clearStackAndShow(Routes.confirmNameView);
+        } else {
+          await _navigationService.clearStackAndShow(Routes.homeView);
+        }
       }
-
-      final authResponse = result.data!;
-      if (authResponse.user.name.isEmpty) {
-        _navigationService.replaceWith(Routes.confirmNameView);
-      } else {
-        _navigationService.replaceWith(Routes.homeView);
-      }
-    } catch (e) {
-      setError(e.toString());
     } finally {
       setBusy(false);
     }
+  }
+
+  void onBackPressed() {
+    _navigationService.back();
+  }
+
+  void onClosePressed() {
+    _navigationService.clearStackAndShow(Routes.landingView);
   }
 
   @override

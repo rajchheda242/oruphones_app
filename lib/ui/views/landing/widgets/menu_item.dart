@@ -5,14 +5,14 @@ class MenuItem extends StatelessWidget {
   final String title;
   final String iconPath;
   final VoidCallback onTap;
-  final double scale;
+  final double scaleFactor;
 
   const MenuItem({
     Key? key,
     required this.title,
     required this.iconPath,
     required this.onTap,
-    required this.scale,
+    required this.scaleFactor,
   }) : super(key: key);
 
   @override

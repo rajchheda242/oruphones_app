@@ -5,7 +5,7 @@ class MockAuthService extends AuthService {
   @override
   Future<AuthResponse> checkLoginStatus() async {
     await Future.delayed(const Duration(seconds: 1));
-    return AuthResponse(isAuthenticated: false, user: User(name: ''));
+    return AuthResponse(isAuthenticated: false, user: User(name: '', joinDate: ''));
   }
 
   @override
@@ -13,8 +13,8 @@ class MockAuthService extends AuthService {
     required int countryCode,
     required int mobileNumber,
   }) async {
+    // Simulate API delay
     await Future.delayed(const Duration(seconds: 1));
-    print('Mock OTP generated for +$countryCode $mobileNumber');
     return ApiResponse(success: true);
   }
 
@@ -24,13 +24,18 @@ class MockAuthService extends AuthService {
     required int mobileNumber,
     required int otp,
   }) async {
+    // Simulate API delay
     await Future.delayed(const Duration(seconds: 1));
-    print('Mock OTP validated: $otp');
+    
+    // Mock successful login
     return ApiResponse(
       success: true,
       data: AuthResponse(
         isAuthenticated: true,
-        user: User(name: ''),
+        user: User(
+          name: '',  // Empty name for new user
+          joinDate: DateTime.now().toString(),
+        ),
       ),
     );
   }

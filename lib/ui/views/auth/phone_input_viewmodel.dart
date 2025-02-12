@@ -1,3 +1,4 @@
+import 'package:oruphones_app/services/auth_service.dart';
 import 'package:oruphones_app/ui/views/auth/phone_input_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class PhoneInputViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _authService = locator<AuthService>();
   final bool isBottomSheet;
   
   PhoneInputViewModel({this.isBottomSheet = false});
@@ -31,27 +33,21 @@ class PhoneInputViewModel extends BaseViewModel {
   }
 
   Future<void> navigateToOtpScreen() async {
+    if (!canProceed) return;
+    
     try {
-      if (!canProceed) {
-        if (_phoneNumber.length != 10) {
-          setError('Please enter a valid 10-digit phone number');
-        } else if (!_termsAccepted) {
-          setError('Please accept terms and conditions');
-        }
-        notifyListeners();
-        return;
-      }
-
       setBusy(true);
-      // Here you would typically make an API call to send OTP
-      
-      await _navigationService.navigateToLoginView(
-        isBottomSheet: isBottomSheet,
-        phoneNumber: _phoneNumber,
+      final result = await _authService.generateOtp(
+        countryCode: 91,
+        mobileNumber: int.parse(_phoneNumber),
       );
-    } catch (e) {
-      setError('Something went wrong. Please try again.');
-      notifyListeners();
+
+      if (result.success) {
+        await _navigationService.navigateToVerifyOtpView(
+          phoneNumber: _phoneNumber,
+          isBottomSheet: isBottomSheet,
+        );
+      }
     } finally {
       setBusy(false);
     }

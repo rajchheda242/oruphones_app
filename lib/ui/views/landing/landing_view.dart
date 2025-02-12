@@ -1,270 +1,231 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'landing_viewmodel.dart';
-import 'widgets/menu_grid_item.dart';
-import 'widgets/menu_item.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'landing_viewmodel.dart';
+import 'widgets/menu_item.dart';
 
 class LandingView extends StackedView<LandingViewModel> {
   const LandingView({Key? key}) : super(key: key);
 
-  // Figma reference dimensions
-  static const double figmaWidth = 311.0;
-  static const double figmaHeight = 844.0;
-
   @override
-  Widget builder(
-    BuildContext context,
-    LandingViewModel viewModel,
-    Widget? child,
-  ) {
-    final screenSize = MediaQuery.of(context).size;
-    final scaleWidth = screenSize.width / figmaWidth;
-    final scaleHeight = screenSize.height / figmaHeight;
-    
-    double scaled(double size, {bool width = true}) {
-      return size * (width ? scaleWidth : scaleHeight);
-    }
-
+  Widget builder(BuildContext context, LandingViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            // Top Banner Frame 1000001972
+            // Header
             Container(
-              width: screenSize.width,
-              height: scaled(48.0, width: false), // Fixed height from Figma
+              width: double.infinity,
+              height: viewModel.isLoggedIn ? 118 : 48,
               color: const Color(0xFFF4F4F4),
-              child: Center(
-                child: SizedBox(
-                  width: scaled(figmaWidth),
-                  child: Padding(
-                    padding: EdgeInsets.all(scaled(12.0)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: scaled(42.0),
-                          height: scaled(20.0, width: false),
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => Navigator.of(context).pop(),
-                          child: SizedBox(
-                            width: scaled(24.0),
-                            height: scaled(24.0),
-                            child: Icon(
-                              Icons.close,
-                              size: scaled(24.0),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              padding: const EdgeInsets.all(12),
+              child: viewModel.isLoggedIn 
+                ? _buildLoggedInHeader(context, viewModel)
+                : _buildLoggedOutHeader(context, viewModel),
             ),
 
             Expanded(
-              child: Center(
-                child: Container(
-                  width: scaled(figmaWidth),
-                  padding: EdgeInsets.symmetric(
-                    vertical: scaled(12.0, width: false),
-                  ),
-                  child: Column(
-                    children: [
-                      // Frame 1000001973
-                      Container(
-                        height: scaled(168.0, width: false),
-                        child: Column(
-                          children: [
-                            SizedBox(height: scaled(24.0, width: false)),
-                            
-                            // Buttons Container
-                            Container(
-                              height: scaled(96.0, width: false),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: scaled(16.0),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Login/SignUp Button
-                                  Container(
-                                    width: scaled(279.0),
-                                    height: scaled(43.0, width: false),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF3E468F),
-                                      borderRadius: BorderRadius.circular(100),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Color(0x3310227B),
-                                          blurRadius: 12,
-                                          offset: Offset(0, 4),
-                                        ),
-                                        BoxShadow(
-                                          color: Color(0x3304139C),
-                                          blurRadius: 4,
-                                          offset: Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: TextButton(
-                                      onPressed: () {},
-                                      style: TextButton.styleFrom(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: scaled(10.0, width: false),
-                                          horizontal: scaled(20.0),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Login/SignUp',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontSize: scaled(15.0),
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 24),
+                    
+                    // Buttons Section
+                    viewModel.isLoggedIn 
+                      ? _buildSellButton(context)
+                      : _buildAuthButtons(context, viewModel),
 
-                                  SizedBox(height: scaled(10.0, width: false)),
+                    const Spacer(),
 
-                                  // Sell Your Phone Button
-                                  Container(
-                                    width: scaled(279.0),
-                                    height: scaled(43.0, width: false),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFF6C018),
-                                      borderRadius: BorderRadius.circular(1000),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Color(0x33737B10),
-                                          blurRadius: 12,
-                                          offset: Offset(0, 4),
-                                        ),
-                                        BoxShadow(
-                                          color: Color(0x33A8AB18),
-                                          blurRadius: 4,
-                                          offset: Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: TextButton(
-                                      onPressed: () {},
-                                      style: TextButton.styleFrom(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: scaled(10.0, width: false),
-                                          horizontal: scaled(20.0),
-                                        ),
-                                      ),
-                                      child: SizedBox(
-                                        width: scaled(117.0),
-                                        height: scaled(23.0, width: false),
-                                        child: Center(
-                                          child: Text(
-                                            'Sell Your Phone',
-                                            style: GoogleFonts.poppins(
-                                              color: Colors.black,
-                                              fontSize: scaled(15.0),
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.5,
-                                              letterSpacing: 0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const Spacer(),
-
-                      // Bottom frame
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: scaled(16.0),
-                          vertical: scaled(8.0, width: false),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // First row of items
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                MenuItem(
-                                  title: 'How to Buy',
-                                  iconPath: 'assets/icons/how_to_buy.png',
-                                  onTap: () {},
-                                  scale: scaleWidth,
-                                ),
-                                MenuItem(
-                                  title: 'How to Sell',
-                                  iconPath: 'assets/icons/how_to_sell.png',
-                                  onTap: () {},
-                                  scale: scaleWidth,
-                                ),
-                                MenuItem(
-                                  title: 'Oru Guide',
-                                  iconPath: 'assets/icons/oru_guide.png',
-                                  onTap: () {},
-                                  scale: scaleWidth,
-                                ),
-                              ],
-                            ),
-
-                            SizedBox(height: scaled(12.0, width: false)),
-
-                            // Second row of items
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                MenuItem(
-                                  title: 'About Us',
-                                  iconPath: 'assets/icons/about_us.png',
-                                  onTap: () {},
-                                  scale: scaleWidth,
-                                ),
-                                MenuItem(
-                                  title: 'Privacy Policy',
-                                  iconPath: 'assets/icons/privacy_policy.png',
-                                  onTap: () {},
-                                  scale: scaleWidth,
-                                ),
-                                MenuItem(
-                                  title: 'FAQs',
-                                  iconPath: 'assets/icons/faqs.png',
-                                  onTap: () {},
-                                  scale: scaleWidth,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    // Menu Grid
+                    _buildMenuGrid(context, viewModel),
+                    const SizedBox(height: 16),
+                  ],
                 ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildLoggedInHeader(BuildContext context, LandingViewModel viewModel) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              width: 42,
+              height: 20,
+            ),
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: viewModel.onBackPressed,
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(22),
+              child: Image.asset(
+                'assets/images/user.png',
+                width: 44,
+                height: 44,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  viewModel.userName ?? 'User',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    height: 1.5,
+                    letterSpacing: -1,
+                  ),
+                ),
+                Text(
+                  'Joined: ${viewModel.joinDate ?? 'Unknown'}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFFABABAB),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoggedOutHeader(BuildContext context, LandingViewModel viewModel) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Image.asset(
+          'assets/images/logo.png',
+          width: 42,
+          height: 20,
+        ),
+        IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: viewModel.onBackPressed,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAuthButtons(BuildContext context, LandingViewModel viewModel) {
+    return Column(
+      children: [
+        _buildButton(
+          'Login/SignUp',
+          onPressed: viewModel.navigateToLogin,
+          color: const Color(0xFF3E468F),
+          textColor: Colors.white,
+        ),
+        const SizedBox(height: 10),
+        _buildSellButton(context),
+      ],
+    );
+  }
+
+  Widget _buildSellButton(BuildContext context) {
+    return _buildButton(
+      'Sell Your Phone',
+      onPressed: () {},
+      color: const Color(0xFFF6C018),
+      textColor: Colors.black,
+    );
+  }
+
+  Widget _buildButton(
+    String text, {
+    required VoidCallback onPressed,
+    required Color color,
+    required Color textColor,
+  }) {
+    return Container(
+      width: 279,
+      height: 48,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(1000),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.2),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: GoogleFonts.poppins(
+            color: textColor,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuGrid(BuildContext context, LandingViewModel viewModel) {
+    final menuItems = viewModel.isLoggedIn
+        ? [
+            ('How to Buy', 'assets/icons/how_to_buy.png', viewModel.onHowToBuyTap),
+            ('How to Sell', 'assets/icons/how_to_sell.png', viewModel.onHowToSellTap),
+            ('FAQs', 'assets/icons/faqs.png', viewModel.onFAQsTap),
+            ('About Us', 'assets/icons/about_us.png', viewModel.onAboutUsTap),
+            ('Privacy Policy', 'assets/icons/privacy_policy.png', viewModel.onPrivacyPolicyTap),
+            ('Return Policy', 'assets/icons/return_policy.png', viewModel.onReturnPolicyTap),
+          ]
+        : [
+            ('How to Buy', 'assets/icons/how_to_buy.png', viewModel.onHowToBuyTap),
+            ('How to Sell', 'assets/icons/how_to_sell.png', viewModel.onHowToSellTap),
+            ('Oru Guide', 'assets/icons/oru_guide.png', viewModel.onOruGuideTap),
+            ('About Us', 'assets/icons/about_us.png', viewModel.onAboutUsTap),
+            ('Privacy Policy', 'assets/icons/privacy_policy.png', viewModel.onPrivacyPolicyTap),
+            ('FAQs', 'assets/icons/faqs.png', viewModel.onFAQsTap),
+          ];
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: menuItems.take(3).map((item) => MenuItem(
+            title: item.$1,
+            iconPath: item.$2,
+            onTap: item.$3,
+            scaleFactor: 1,
+          )).toList(),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: menuItems.skip(3).map((item) => MenuItem(
+            title: item.$1,
+            iconPath: item.$2,
+            onTap: item.$3,
+            scaleFactor: 1,
+          )).toList(),
+        ),
+      ],
     );
   }
 

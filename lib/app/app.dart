@@ -16,12 +16,12 @@ import '../ui/views/landing/landing_view.dart';
   ],
   routes: [
     MaterialRoute(page: SplashView),
+    MaterialRoute(page: LandingView),
     MaterialRoute(page: PhoneInputView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: VerifyOtpView),
     MaterialRoute(page: ConfirmNameView),
     MaterialRoute(page: HomeView),
-    MaterialRoute(page: LandingView, initial: true),
   ],
 )
 class App {}
