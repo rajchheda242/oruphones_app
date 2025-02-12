@@ -115,4 +115,85 @@ class HomeViewModel extends BaseViewModel {
       const SnackBar(content: Text('Get App coming soon!')),
     );
   }
+
+  void onRepairPhonesTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('Repair Phones coming soon!')),
+    );
+  }
+
+  void onAccessoriesTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('Accessories coming soon!')),
+    );
+  }
+
+  void onRecyclePhonesTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('Recycle Phones coming soon!')),
+    );
+  }
+
+  void onBatteryHealthCheckTap() {
+    _showSnackBar('Battery Health Check');
+  }
+
+  void onDataWipeTap() {
+    _showSnackBar('Data Wipe');
+  }
+
+  void onDeviceDetailsTap() {
+    _showSnackBar('Device Details');
+  }
+
+  void onDeviceHealthCheckTap() {
+    _showSnackBar('Device Health Check');
+  }
+
+  void onImeiCheckTap() {
+    _showSnackBar('IMEI Check');
+  }
+
+  void onLikeNewPhonesTap() {
+    _showSnackBar('Like New Phones');
+  }
+
+  void onMyFavouritesTap() {
+    _showSnackBar('My Favourites');
+  }
+
+  void onMyNegotiationsTap() {
+    _showSnackBar('My Negotiations');
+  }
+
+  void onMyProfilesTap() {
+    _showSnackBar('My Profiles');
+  }
+
+  void onOpenStoreTap() {
+    _showSnackBar('Open Store');
+  }
+
+  void onPremiumPhonesTap() {
+    _showSnackBar('Premium Phones');
+  }
+
+  void onRefurbishedPhonesTap() {
+    _showSnackBar('Refurbished Phones');
+  }
+
+  void onUnderWarrantyPhonesTap() {
+    _showSnackBar('Under Warranty Phones');
+  }
+
+  void onVerifiedPhonesTap() {
+    _showSnackBar('Verified Phones');
+  }
+
+  // Helper method to reduce code duplication
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      SnackBar(content: Text('$message coming soon!')),
+    );
+  }
 }

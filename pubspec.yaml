@@ -57,3 +57,23 @@ flutter:
     - assets/banners/banner4.png
     - assets/banners/banner5.png
     - assets/banners/  # Add this line
+    - assets/menu/battery_health_check.png
+    - assets/menu/buy_used_phones.png
+    - assets/menu/compare_prices.png
+    - assets/menu/data_wipe.png
+    - assets/menu/device_details.png
+    - assets/menu/device_health_check.png
+    - assets/menu/imei_check.png
+    - assets/menu/like_new_phones.png
+    - assets/menu/my_favourites.png
+    - assets/menu/my_listings.png
+    - assets/menu/my_negotiations.png
+    - assets/menu/my_profiles.png
+    - assets/menu/open_store.png
+    - assets/menu/premium_phones.png
+    - assets/menu/refurbished_phones.png
+    - assets/menu/sell_used_phones.png
+    - assets/menu/services.png
+    - assets/menu/under_warranty_phones.png
+    - assets/menu/verified_phones.png
+    - assets/menu/
