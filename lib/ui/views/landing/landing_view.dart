@@ -14,34 +14,63 @@ class LandingView extends StackedView<LandingViewModel> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
+            // Header with gray background
             Container(
               width: double.infinity,
-              height: viewModel.isLoggedIn ? 118 : 48,
               color: const Color(0xFFF4F4F4),
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: viewModel.isLoggedIn 
                 ? _buildLoggedInHeader(context, viewModel)
                 : _buildLoggedOutHeader(context, viewModel),
             ),
 
+            // Content area
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 32),
                     
-                    // Buttons Section
-                    viewModel.isLoggedIn 
-                      ? _buildSellButton(context)
-                      : _buildAuthButtons(context, viewModel),
+                    // Sell Button
+                    if (viewModel.isLoggedIn) 
+                      _buildSellButton(context, viewModel),
+                    
+                    const SizedBox(height: 32),
+                    
+                    // Logout Button
+                    if (viewModel.isLoggedIn)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: InkWell(
+                          onTap: viewModel.logout,
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/icons/logout.png',
+                                width: 24,
+                                height: 24,
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                'Logout',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
 
                     const Spacer(),
 
                     // Menu Grid
                     _buildMenuGrid(context, viewModel),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
@@ -64,7 +93,9 @@ class LandingView extends StackedView<LandingViewModel> {
               height: 20,
             ),
             IconButton(
-              icon: const Icon(Icons.close),
+              padding: EdgeInsets.zero,
+              icon: const Icon(Icons.close, color: Color(0xFF3F3E8F)),
+              iconSize: 24,
               onPressed: viewModel.onBackPressed,
             ),
           ],
@@ -72,13 +103,19 @@ class LandingView extends StackedView<LandingViewModel> {
         const SizedBox(height: 24),
         Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(22),
-              child: Image.asset(
-                'assets/images/user.png',
-                width: 44,
-                height: 44,
-                fit: BoxFit.cover,
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(22),
+                child: Image.asset(
+                  'assets/images/user.png',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(width: 16),
@@ -90,8 +127,7 @@ class LandingView extends StackedView<LandingViewModel> {
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    height: 1.5,
-                    letterSpacing: -1,
+                    color: const Color(0xFF282828),
                   ),
                 ),
                 Text(
@@ -137,17 +173,45 @@ class LandingView extends StackedView<LandingViewModel> {
           textColor: Colors.white,
         ),
         const SizedBox(height: 10),
-        _buildSellButton(context),
+        _buildSellButton(context, viewModel),
       ],
     );
   }
 
-  Widget _buildSellButton(BuildContext context) {
-    return _buildButton(
-      'Sell Your Phone',
-      onPressed: () {},
-      color: const Color(0xFFF6C018),
-      textColor: Colors.black,
+  Widget _buildSellButton(BuildContext context, LandingViewModel viewModel) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        height: 48,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF6C018),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFF6C018).withOpacity(0.3),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: viewModel.navigateToSellPhone,
+            borderRadius: BorderRadius.circular(24),
+            child: Center(
+              child: Text(
+                'Sell Your Phone',
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -185,6 +249,43 @@ class LandingView extends StackedView<LandingViewModel> {
     );
   }
 
+  Widget _buildLoggedInMenu(BuildContext context, LandingViewModel viewModel) {
+    return Column(
+      children: [
+        // Logout Button
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: InkWell(
+            onTap: viewModel.logout,
+            child: Row(
+              children: [
+                Image.asset(
+                  'assets/icons/logout.png',
+                  width: 24,
+                  height: 24,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Logout',
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        
+        // Menu Grid
+        _buildMenuGrid(context, viewModel),
+      ],
+    );
+  }
+
   Widget _buildMenuGrid(BuildContext context, LandingViewModel viewModel) {
     final menuItems = viewModel.isLoggedIn
         ? [
@@ -204,28 +305,31 @@ class LandingView extends StackedView<LandingViewModel> {
             ('FAQs', 'assets/icons/faqs.png', viewModel.onFAQsTap),
           ];
 
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: menuItems.take(3).map((item) => MenuItem(
-            title: item.$1,
-            iconPath: item.$2,
-            onTap: item.$3,
-            scaleFactor: 1,
-          )).toList(),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: menuItems.skip(3).map((item) => MenuItem(
-            title: item.$1,
-            iconPath: item.$2,
-            onTap: item.$3,
-            scaleFactor: 1,
-          )).toList(),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: menuItems.take(3).map((item) => MenuItem(
+              title: item.$1,
+              iconPath: item.$2,
+              onTap: item.$3,
+              scaleFactor: 1,
+            )).toList(),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: menuItems.skip(3).map((item) => MenuItem(
+              title: item.$1,
+              iconPath: item.$2,
+              onTap: item.$3,
+              scaleFactor: 1,
+            )).toList(),
+          ),
+        ],
+      ),
     );
   }
 

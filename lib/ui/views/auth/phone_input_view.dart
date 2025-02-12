@@ -22,15 +22,15 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
           child: Stack(
             children: [
               Container(
-                color: Color(0xFFFFFFFF), // #FFFFFF background color
+                color: const Color(0xFFFFFFFF), // #FFFFFF background color
                 width: 358, // Frame 1514 fixed width
                 height: 775, // Frame 1514 fixed height
                 margin: const EdgeInsets.only(left: 16), // Left margin 16px
                 padding: const EdgeInsets.symmetric(vertical: 24), // Top and Bottom padding 24px
                 child: Column(
                   children: [
-                    SizedBox(height: 49), // Initial padding for first element
-                    Container(
+                    const SizedBox(height: 49), // Initial padding for first element
+                    SizedBox(
                       width: 136, // Frame 1000001956 width
                       child: Column(
                         children: [
@@ -39,8 +39,8 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                             width: 116,
                             height: 61,
                           ),
-                          SizedBox(height: 60), // Gap of 60px between logo and welcome text
-                          Container(
+                          const SizedBox(height: 60), // Gap of 60px between logo and welcome text
+                          SizedBox(
                             width: 136,
                             height: 66,
                             child: Column(
@@ -53,10 +53,10 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                     fontWeight: FontWeight.w600,
                                     height: 44.24/28,
                                     letterSpacing: 0,
-                                    color: Color(0xFF3F3E8F),
+                                    color: const Color(0xFF3F3E8F),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   width: 130,
                                   height: 22,
                                   child: Text(
@@ -67,7 +67,7 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                       fontWeight: FontWeight.w400,
                                       height: 22.12/14, // line height 22.12px
                                       letterSpacing: 0, // 0% letter spacing
-                                      color: Color(0xFF707070),
+                                      color: const Color(0xFF707070),
                                     ),
                                   ),
                                 ),
@@ -77,14 +77,14 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 100), // Gap from Frame 1514
-                    Container(
+                    const SizedBox(height: 100), // Gap from Frame 1514
+                    SizedBox(
                       width: 358, // Frame 1000001841 full width
                       height: 71, // Frame 1000001841 height
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 153,
                             height: 19,
                             child: Text(
@@ -94,7 +94,7 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                 fontWeight: FontWeight.w400,
                                 height: 18.96/12,
                                 letterSpacing: 0,
-                                color: Color(0xFF282828),
+                                color: const Color(0xFF282828),
                               ),
                             ),
                           ),
@@ -106,9 +106,9 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                               vertical: 15,
                             ),
                             decoration: BoxDecoration(
-                              color: Color(0xFFFFFFFF),
+                              color: const Color(0xFFFFFFFF),
                               border: Border.all(
-                                color: Color(0xFFCCCCCC),
+                                color: const Color(0xFFCCCCCC),
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(4),
@@ -120,10 +120,10 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                   style: GoogleFonts.poppins(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
-                                    color: Color(0xFF282828),
+                                    color: const Color(0xFF282828),
                                   ),
                                 ),
-                                SizedBox(width: 10), // Gap of 10px
+                                const SizedBox(width: 10), // Gap of 10px
                                 Expanded(
                                   child: TextFormField(
                                     decoration: InputDecoration(
@@ -136,7 +136,7 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xFF282828),
+                                      color: const Color(0xFF282828),
                                     ),
                                     keyboardType: TextInputType.phone,
                                     onChanged: viewModel.setPhoneNumber,
@@ -148,13 +148,13 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 100), // Gap from Frame 1514
-                    Container(
+                    const SizedBox(height: 100), // Gap from Frame 1514
+                    SizedBox(
                       width: 358, // Frame 1000001825 width (fill)
                       height: 89, // Frame 1000001825 height (hug)
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 358, // Frame 1000001821 width
                             height: 22, // Frame 1000001821 height
                             child: Row(
@@ -163,9 +163,9 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                   width: 19,
                                   height: 20,
                                   decoration: BoxDecoration(
-                                    color: Color(0xFFFFFFFF),
+                                    color: const Color(0xFFFFFFFF),
                                     border: Border.all(
-                                      color: Color(0xFFABABAB),
+                                      color: const Color(0xFFABABAB),
                                       width: 1,
                                     ),
                                     borderRadius: BorderRadius.circular(4),
@@ -212,17 +212,17 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 16), // Gap between Frame 1000001821 and 1000001824
+                          const SizedBox(height: 16), // Gap between Frame 1000001821 and 1000001824
                           Container(
                             width: 358,
                             height: 51,
                             decoration: BoxDecoration(
                               color: viewModel.canProceed 
-                                ? Color(0xFF3F3E8F)
-                                : Color(0xFF3F3E8F).withOpacity(0.5),
+                                ? const Color(0xFF3F3E8F)
+                                : const Color(0xFF3F3E8F).withOpacity(0.5),
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(
-                                color: Color(0xFFB1B1B1),
+                                color: const Color(0xFFB1B1B1),
                                 width: 1,
                               ),
                             ),
@@ -235,7 +235,7 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                 borderRadius: BorderRadius.circular(4),
                                 child: Center(
                                   child: viewModel.isBusy
-                                    ? CircularProgressIndicator(color: Colors.white)
+                                    ? const CircularProgressIndicator(color: Colors.white)
                                     : Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
@@ -245,11 +245,11 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600,
                                               height: 27/18,
-                                              color: Color(0xFFFFFFFF),
+                                              color: const Color(0xFFFFFFFF),
                                             ),
                                           ),
-                                          SizedBox(width: 10),
-                                          Icon(
+                                          const SizedBox(width: 10),
+                                          const Icon(
                                             Icons.arrow_forward,
                                             size: 24,
                                             color: Color(0xFFFFFFFF),
@@ -271,11 +271,11 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                 top: 24,
                 right: 0,
                 child: IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () => viewModel.goBack(),
-                  color: Color(0xFF3F3E8F),
+                  color: const Color(0xFF3F3E8F),
                   padding: EdgeInsets.zero,
-                  constraints: BoxConstraints(),
+                  constraints: const BoxConstraints(),
                   iconSize: 24,
                 ),
               ),

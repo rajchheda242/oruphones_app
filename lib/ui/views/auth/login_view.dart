@@ -22,15 +22,15 @@ class LoginView extends StackedView<LoginViewModel> {
           child: Stack(
             children: [
               Container(
-                color: Color(0xFFFFFFFF),
+                color: const Color(0xFFFFFFFF),
                 width: 358,
                 height: 775,
                 margin: const EdgeInsets.only(left: 16),
                 padding: const EdgeInsets.symmetric(vertical: 24),
                 child: Column(
                   children: [
-                    SizedBox(height: 49),
-                    Container(
+                    const SizedBox(height: 49),
+                    SizedBox(
                       width: 343,
                       height: 273,
                       child: Column(
@@ -50,12 +50,12 @@ class LoginView extends StackedView<LoginViewModel> {
                                   width: 116,
                                   height: 61,
                                   color: Colors.red,
-                                  child: Center(child: Text('Logo Error')),
+                                  child: const Center(child: Text('Logo Error')),
                                 );
                               },
                             ),
                           ),
-                          SizedBox(height: 60),
+                          const SizedBox(height: 60),
                           Text(
                             'Verify Mobile No.',
                             textAlign: TextAlign.center,
@@ -64,11 +64,11 @@ class LoginView extends StackedView<LoginViewModel> {
                               fontWeight: FontWeight.w600,
                               height: 44.24/28,
                               letterSpacing: 0,
-                              color: Color(0xFF3E468F),
+                              color: const Color(0xFF3E468F),
                             ),
                           ),
-                          SizedBox(height: 8),
-                          Container(
+                          const SizedBox(height: 8),
+                          SizedBox(
                             width: 343,
                             height: 51,
                             child: RichText(
@@ -79,10 +79,10 @@ class LoginView extends StackedView<LoginViewModel> {
                                   fontWeight: FontWeight.w400,
                                   height: 25.2/14,
                                   letterSpacing: 0,
-                                  color: Color(0xFF757474),
+                                  color: const Color(0xFF757474),
                                 ),
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Please enter the 4 digital verification code sent to your mobile number ',
                                   ),
                                   TextSpan(
@@ -91,7 +91,7 @@ class LoginView extends StackedView<LoginViewModel> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  TextSpan(text: ' via SMS'),
+                                  const TextSpan(text: ' via SMS'),
                                 ],
                               ),
                             ),
@@ -99,8 +99,8 @@ class LoginView extends StackedView<LoginViewModel> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 32), // Space after header
-                    Container(
+                    const SizedBox(height: 32), // Space after header
+                    SizedBox(
                       width: 198,  // Updated to match Frame 1000001957
                       height: 150, // Updated to match Frame 1000001957
                       child: Row(
@@ -112,7 +112,7 @@ class LoginView extends StackedView<LoginViewModel> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
-                                color: Color(0xFFE5E7EB),
+                                color: const Color(0xFFE5E7EB),
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),
@@ -127,9 +127,9 @@ class LoginView extends StackedView<LoginViewModel> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xFF282828),
+                                  color: const Color(0xFF282828),
                                 ),
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   counterText: '',
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
@@ -141,13 +141,13 @@ class LoginView extends StackedView<LoginViewModel> {
                         }),
                       ),
                     ),
-                    SizedBox(height: 60),  // Gap specified in Frame 1000001957
-                    Container(
+                    const SizedBox(height: 60),  // Gap specified in Frame 1000001957
+                    SizedBox(
                       width: 160,  // Frame 1000001840 width
                       height: 46,  // Frame 1000001840 height
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 138,
                             height: 25,
                             child: Text(
@@ -158,12 +158,12 @@ class LoginView extends StackedView<LoginViewModel> {
                                 fontWeight: FontWeight.w400,
                                 height: 25.2/14,
                                 letterSpacing: 0,
-                                color: Color(0xFF757474),
+                                color: const Color(0xFF757474),
                               ),
                             ),
                           ),
-                          SizedBox(height: 16),  // Gap from Frame 1000001821
-                          Container(
+                          const SizedBox(height: 16),  // Gap from Frame 1000001821
+                          SizedBox(
                             width: 160,
                             height: 21,
                             child: TextButton(
@@ -182,7 +182,7 @@ class LoginView extends StackedView<LoginViewModel> {
                                   fontWeight: FontWeight.w400,
                                   height: 21/14,
                                   letterSpacing: 0,
-                                  color: Color(0xFF191919),
+                                  color: const Color(0xFF191919),
                                   decoration: TextDecoration.underline,
                                 ),
                               ),
@@ -191,15 +191,15 @@ class LoginView extends StackedView<LoginViewModel> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 60),  // After previous section
+                    const SizedBox(height: 60),  // After previous section
                     Container(
                       width: 358,  // Fill (358px)
                       height: 51,  // Hug (51px)
                       decoration: BoxDecoration(
-                        color: Color(0xFF3F3E8F),
+                        color: const Color(0xFF3F3E8F),
                         borderRadius: BorderRadius.circular(4),
                         border: Border.all(
-                          color: Color(0xFFB1B1B1),
+                          color: const Color(0xFFB1B1B1),
                           width: 1,
                         ),
                       ),
@@ -220,11 +220,11 @@ class LoginView extends StackedView<LoginViewModel> {
                                     fontWeight: FontWeight.w600,
                                     height: 27/18,  // Line height 27px
                                     letterSpacing: 0,
-                                    color: Color(0xFFFFFFFF),  // #FFFFFF
+                                    color: const Color(0xFFFFFFFF),  // #FFFFFF
                                   ),
                                 ),
-                                SizedBox(width: 10),  // Gap 10px
-                                Icon(
+                                const SizedBox(width: 10),  // Gap 10px
+                                const Icon(
                                   Icons.arrow_forward,
                                   size: 24,
                                   color: Colors.white,
@@ -242,11 +242,11 @@ class LoginView extends StackedView<LoginViewModel> {
                 top: 24,
                 right: 0,
                 child: IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () => viewModel.goBack(),
-                  color: Color(0xFF3F3E8F),
+                  color: const Color(0xFF3F3E8F),
                   padding: EdgeInsets.zero,
-                  constraints: BoxConstraints(),
+                  constraints: const BoxConstraints(),
                   iconSize: 24,
                 ),
               ),
@@ -254,11 +254,11 @@ class LoginView extends StackedView<LoginViewModel> {
                 top: 24,
                 left: 0,
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back),
                   onPressed: () => viewModel.goBack(),
-                  color: Color(0xFF3F3E8F),
+                  color: const Color(0xFF3F3E8F),
                   padding: EdgeInsets.zero,
-                  constraints: BoxConstraints(),
+                  constraints: const BoxConstraints(),
                   iconSize: 24,
                 ),
               ),

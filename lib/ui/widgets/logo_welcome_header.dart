@@ -13,7 +13,7 @@ class LogoWelcomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 136,
       child: Column(
         children: [
@@ -22,8 +22,8 @@ class LogoWelcomeHeader extends StatelessWidget {
             width: 116,
             height: 61,
           ),
-          SizedBox(height: 60),
-          Container(
+          const SizedBox(height: 60),
+          SizedBox(
             width: 136,
             height: 66,
             child: Column(
@@ -36,10 +36,10 @@ class LogoWelcomeHeader extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     height: 44.24/28,
                     letterSpacing: 0,
-                    color: Color(0xFF3F3E8F),
+                    color: const Color(0xFF3F3E8F),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 130,
                   height: 22,
                   child: Text(
@@ -50,7 +50,7 @@ class LogoWelcomeHeader extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       height: 22.12/14,
                       letterSpacing: 0,
-                      color: Color(0xFF707070),
+                      color: const Color(0xFF707070),
                     ),
                   ),
                 ),

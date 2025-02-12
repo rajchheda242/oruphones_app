@@ -64,7 +64,7 @@ class PhoneInputViewModel extends BaseViewModel {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => PhoneInputView(isBottomSheet: true),
+      builder: (context) => const PhoneInputView(isBottomSheet: true),
     );
   }
 } 

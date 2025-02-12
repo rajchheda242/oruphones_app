@@ -45,3 +45,5 @@ flutter:
     - assets/icons/privacy_policy.png
     - assets/icons/return_policy.png
     - assets/icons/oru_guide.png
+    - assets/icons/logo.png
+    - assets/icons/logout.png

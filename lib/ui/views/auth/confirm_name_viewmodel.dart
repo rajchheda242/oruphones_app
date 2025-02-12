@@ -11,7 +11,12 @@ class ConfirmNameViewModel extends BaseViewModel {
   final nameController = TextEditingController();
   final bool isBottomSheet;
 
-  ConfirmNameViewModel({this.isBottomSheet = false});
+  ConfirmNameViewModel({this.isBottomSheet = false}) {
+    // Add listener to text controller
+    nameController.addListener(() {
+      notifyListeners();  // This will update the UI when text changes
+    });
+  }
 
   bool get canConfirm => nameController.text.trim().isNotEmpty;
 

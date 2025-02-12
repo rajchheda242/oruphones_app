@@ -3,7 +3,6 @@ import 'package:lottie/lottie.dart';
 import 'package:oruphones_app/app/app.locator.dart';
 import 'package:oruphones_app/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
-import 'splash_viewmodel.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.router.dart';
 

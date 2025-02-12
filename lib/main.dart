@@ -4,8 +4,6 @@ import 'app/app.router.dart';
 import 'app/app.locator.dart';
 import 'services/auth_service.dart';
 import 'services/mock_auth_service.dart';
-import 'ui/views/auth/phone_input_view.dart';
-import 'ui/views/landing/landing_view.dart';
 import 'ui/views/splash/splash_view.dart';
 
 void main() {

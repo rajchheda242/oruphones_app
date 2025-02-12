@@ -3,7 +3,6 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../services/auth_service.dart';
-import '../../../services/firebase_service.dart';
 
 class SplashViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
