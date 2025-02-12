@@ -1,36 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'app/app.router.dart';
 import 'app/app.locator.dart';
-import 'services/auth_service.dart';
-import 'services/mock_auth_service.dart';
-import 'ui/views/splash/splash_view.dart';
+import 'app/app.router.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-
-  // Register mock service before running the app
-  locator.unregister<AuthService>(); // Remove any existing registration
-  locator.registerLazySingleton<AuthService>(() => MockAuthService());
-
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'OruPhones',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: const SplashView(),
-      onGenerateRoute: StackedRouter().onGenerateRoute,
+      title: 'OruPhones App',
       navigatorKey: StackedService.navigatorKey,
+      onGenerateRoute: StackedRouter().onGenerateRoute,
+      initialRoute: Routes.homeView,
     );
   }
 }
