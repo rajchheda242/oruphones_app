@@ -64,4 +64,55 @@ class HomeViewModel extends BaseViewModel {
       ),
     );
   }
+
+  void onSellUsedPhonesTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(
+        content: Text('Sell Used Phones coming soon!'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void onBuyUsedPhonesTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('Buy Used Phones coming soon!')),
+    );
+  }
+
+  void onComparePricesTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('Compare Prices coming soon!')),
+    );
+  }
+
+  void onMyProfileTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('My Profile coming soon!')),
+    );
+  }
+
+  void onMyListingsTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('My Listings coming soon!')),
+    );
+  }
+
+  void onServicesTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('Services coming soon!')),
+    );
+  }
+
+  void onRegisterStoreTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('Register Store coming soon!')),
+    );
+  }
+
+  void onGetAppTap() {
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      const SnackBar(content: Text('Get App coming soon!')),
+    );
+  }
 }

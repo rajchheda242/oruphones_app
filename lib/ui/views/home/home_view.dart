@@ -3,6 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_viewmodel.dart';
 import 'widgets/home_menu_bar.dart';
+import 'widgets/phone_nav_button.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
   const HomeView({Key? key}) : super(key: key);
@@ -101,6 +102,58 @@ class HomeView extends StackedView<HomeViewModel> {
                       ),
                       // Space for scrollable buttons that will be added later
                       const SizedBox(height: 10),
+                      // Scrollable buttons frame
+                      SizedBox(
+                        width: 358,
+                        height: 36,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              PhoneNavButton(
+                                text: 'Sell Used Phones',
+                                onTap: () => viewModel.onSellUsedPhonesTap(),
+                              ),
+                              const SizedBox(width: 8),
+                              PhoneNavButton(
+                                text: 'Buy Used Phones',
+                                onTap: () => viewModel.onBuyUsedPhonesTap(),
+                              ),
+                              const SizedBox(width: 8),
+                              PhoneNavButton(
+                                text: 'Compare Prices',
+                                onTap: () => viewModel.onComparePricesTap(),
+                              ),
+                              const SizedBox(width: 8),
+                              PhoneNavButton(
+                                text: 'My Profile',
+                                onTap: () => viewModel.onMyProfileTap(),
+                              ),
+                              const SizedBox(width: 8),
+                              PhoneNavButton(
+                                text: 'My Listings',
+                                onTap: () => viewModel.onMyListingsTap(),
+                              ),
+                              const SizedBox(width: 8),
+                              PhoneNavButton(
+                                text: 'Services',
+                                onTap: () => viewModel.onServicesTap(),
+                              ),
+                              const SizedBox(width: 8),
+                              PhoneNavButton(
+                                text: 'Register your Store',
+                                onTap: () => viewModel.onRegisterStoreTap(),
+                                tag: 'new',
+                              ),
+                              const SizedBox(width: 8),
+                              PhoneNavButton(
+                                text: 'Get the App',
+                                onTap: () => viewModel.onGetAppTap(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
