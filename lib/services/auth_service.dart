@@ -205,14 +205,31 @@ class User {
 
   User({
     required this.name,
-    required this.joinDate,
+    required String joinDate,
     this.profileImage,
-  });
+  }) : joinDate = _formatDate(joinDate);
+
+  static String _formatDate(String date) {
+    try {
+      final DateTime dateTime = DateTime.parse(date);
+      return 'Joined: ${_getMonth(dateTime.month)} ${dateTime.day} ${dateTime.year}';
+    } catch (e) {
+      return 'Joined: Unknown';
+    }
+  }
+
+  static String _getMonth(int month) {
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return months[month - 1];
+  }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       name: json['userName'] ?? '',
-      joinDate: json['joinDate'] ?? '',
+      joinDate: json['joinDate'] ?? DateTime.now().toIso8601String(),
       profileImage: json['profileImage'],
     );
   }

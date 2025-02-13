@@ -133,7 +133,7 @@ class LandingView extends StackedView<LandingViewModel> {
                   ),
                 ),
                 Text(
-                  'Joined: ${viewModel.joinDate ?? 'Unknown'}',
+                  viewModel.joinDate ?? 'Unknown',
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
