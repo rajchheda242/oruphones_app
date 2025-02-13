@@ -36,8 +36,12 @@ flutter:
     - assets/animations/
     - assets/images/
     - assets/icons/
+    - assets/ads/
     - assets/images/logo.png
     - assets/images/user.png
+    - assets/images/product.png
+    - assets/ads/ad1.png
+    - assets/ads/ad2.png
     - assets/icons/how_to_buy.png
     - assets/icons/how_to_sell.png
     - assets/icons/faqs.png
@@ -56,7 +60,7 @@ flutter:
     - assets/banners/banner3.png
     - assets/banners/banner4.png
     - assets/banners/banner5.png
-    - assets/banners/  # Add this line
+    - assets/banners/
     - assets/menu/battery_health_check.png
     - assets/menu/buy_used_phones.png
     - assets/menu/compare_prices.png

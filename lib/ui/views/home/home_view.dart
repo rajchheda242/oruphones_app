@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:oruphones_app/ui/widgets/gradient_box_border.dart';
+import 'package:oruphones_app/ui/widgets/product_card.dart';
 import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_viewmodel.dart';
@@ -7,6 +9,8 @@ import 'widgets/phone_nav_button.dart';
 import 'widgets/phone_banners.dart';
 import 'widgets/other_menu.dart';
 import 'widgets/top_brands.dart';
+import 'widgets/best_deals_section.dart';
+import 'dart:math' show pi;
 
 class HomeView extends StackedView<HomeViewModel> {
   const HomeView({Key? key}) : super(key: key);
@@ -165,16 +169,88 @@ class HomeView extends StackedView<HomeViewModel> {
                         const OtherMenu(completer: null,),
                         const SizedBox(height: 28),
                         const TopBrands(),
+                        const SizedBox(height: 28),
+                        BestDealsSection(
+                          onSortTap: () {
+                            viewModel.onSortTap();
+                          },
+                          onFilterTap: () {
+                            viewModel.onFilterTap();
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        // Product Grid
+                        Container(
+                          width: 358,
+                          child: GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 16,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 174/281,
+                            ),
+                            itemCount: 20,
+                            itemBuilder: (context, index) {
+                              if ((index + 1) % 8 == 0) {
+                                final adNumber = ((index ~/ 8) % 2) + 1;
+                                return Container(
+                                  width: 174,
+                                  height: 292,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.16),
+                                    color: const Color(0x12F6C018),
+                                    border: GradientBoxBorder(
+                                      gradient: const LinearGradient(
+                                        begin: Alignment(0.0, 0.0),
+                                        end: Alignment(0.0, 1.0),
+                                        colors: [
+                                          Color(0x00CFCFCF),
+                                          Color(0xFFCFCFCF),
+                                        ],
+                                        stops: [0.2755, 0.9106],
+                                        transform: GradientRotation(167.72 * pi / 180),
+                                      ),
+                                      width: 1.02,
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    'assets/ads/ad$adNumber.png',
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      print('Failed to load ad$adNumber: $error');
+                                      return Center(
+                                        child: Text('Ad $adNumber'),
+                                      );
+                                    },
+                                  ),
+                                );
+                              }
+                              
+                              final productIndex = index - (index ~/ 8);
+                              
+                              return ProductCard(
+                                title: 'Apple iPhone 13 Pro',
+                                storage: '256 GB',
+                                condition: 'Like New',
+                                price: 41500,
+                                originalPrice: 81500,
+                                location: 'Nijampur, Luc...',
+                                date: 'July 25th',
+                                imageUrl: 'assets/images/product.png',
+                                isVerified: true,
+                                isPriceNegotiable: true,
+                                onTap: () => viewModel.onProductTap(),
+                                onFavoriteTap: (isFavorite) => viewModel.onFavoriteTap(isFavorite),
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ],
-              ),
-            ),
-            SafeArea(
-              top: false,
-              child: Center(
-                child: Text('Home Content'),
               ),
             ),
           ],

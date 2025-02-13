@@ -227,6 +227,26 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateToPhoneInputView();
   }
 
+  void onSortTap() {
+    // Implement instant animation for sort bottom sheet
+  }
+
+  void onFilterTap() {
+    // Implement 300ms ease-out animation for filter bottom sheet
+  }
+
+  void onProductTap() {
+    _showSnackBar('Product details');
+  }
+
+  void onFavoriteTap(bool isFavorite) {
+    _showSnackBar(isFavorite ? 'Added to favorites' : 'Removed from favorites');
+  }
+
+  void onSellNowTap() {
+    _showSnackBar('Sell Now');
+  }
+
   // Helper method to reduce code duplication
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(

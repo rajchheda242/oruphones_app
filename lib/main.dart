@@ -18,7 +18,11 @@ class MyApp extends StatelessWidget {
       title: 'OruPhones App',
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
-      initialRoute: Routes.homeView,
+      initialRoute: Routes.splashView,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
     );
   }
 }
