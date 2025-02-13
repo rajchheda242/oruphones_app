@@ -190,6 +190,18 @@ class HomeViewModel extends BaseViewModel {
     _showSnackBar('Verified Phones');
   }
 
+  void onBrandTap(String brand) {
+    _showSnackBar('$brand phones');
+  }
+
+  void onMoreBrandsTap() {
+    _showSnackBar('More Brands');
+  }
+
+  void onViewAllBrandsTap() {
+    _showSnackBar('View All Brands');
+  }
+
   // Helper method to reduce code duplication
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(

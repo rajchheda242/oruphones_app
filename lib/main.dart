@@ -4,6 +4,7 @@ import 'app/app.locator.dart';
 import 'app/app.router.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(const MyApp());
 }

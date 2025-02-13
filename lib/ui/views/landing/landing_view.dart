@@ -33,9 +33,11 @@ class LandingView extends StackedView<LandingViewModel> {
                   children: [
                     const SizedBox(height: 32),
                     
-                    // Sell Button
-                    if (viewModel.isLoggedIn) 
-                      _buildSellButton(context, viewModel),
+                    // Show auth buttons if logged out, sell button if logged in
+                    if (viewModel.isLoggedIn)
+                      _buildSellButton(context, viewModel)
+                    else
+                      _buildAuthButtons(context, viewModel),
                     
                     const SizedBox(height: 32),
                     
@@ -222,11 +224,12 @@ class LandingView extends StackedView<LandingViewModel> {
     required Color textColor,
   }) {
     return Container(
-      width: 279,
+      width: double.infinity,
       height: 48,
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(1000),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
             color: color.withOpacity(0.2),
@@ -235,14 +238,20 @@ class LandingView extends StackedView<LandingViewModel> {
           ),
         ],
       ),
-      child: TextButton(
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: GoogleFonts.poppins(
-            color: textColor,
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(24),
+          child: Center(
+            child: Text(
+              text,
+              style: GoogleFonts.poppins(
+                color: textColor,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
         ),
       ),

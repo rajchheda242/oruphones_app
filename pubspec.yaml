@@ -68,7 +68,6 @@ flutter:
     - assets/menu/my_favourites.png
     - assets/menu/my_listings.png
     - assets/menu/my_negotiations.png
-    - assets/menu/my_profiles.png
     - assets/menu/open_store.png
     - assets/menu/premium_phones.png
     - assets/menu/refurbished_phones.png
@@ -76,4 +75,13 @@ flutter:
     - assets/menu/services.png
     - assets/menu/under_warranty_phones.png
     - assets/menu/verified_phones.png
-    - assets/menu/
+    - assets/menu/my_profile.png
+    - assets/icons/more.png
+    - assets/brands/apple.png
+    - assets/brands/mi.png
+    - assets/brands/samsung.png
+    - assets/brands/vivo.png
+    - assets/brands/realme.png
+    - assets/brands/motorola.png
+    - assets/brands/oppo.png
+    - assets/icons/arrow.png

@@ -13,7 +13,7 @@ class OtherMenu extends ViewModelWidget<HomeViewModel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 22, bottom: 28),
           child: Text(
             "What's on your mind?",
             style: GoogleFonts.poppins(
@@ -24,9 +24,9 @@ class OtherMenu extends ViewModelWidget<HomeViewModel> {
             ),
           ),
         ),
-        const SizedBox(height: 28),
+        const SizedBox(height: 0),
         SizedBox(
-          height: 136,
+          height: 140,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -35,6 +35,7 @@ class OtherMenu extends ViewModelWidget<HomeViewModel> {
                 MenuButton(
                   iconName: 'buy_used_phones',
                   onTap: () => viewModel.onBuyUsedPhonesTap(),
+                  // iconSize: 90,
                 ),
                 const SizedBox(width: 16),
                 MenuButton(
