@@ -6,6 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../services/auth_service.dart';
+import '../../../services/mock_auth_service.dart';
 
 class VerifyOtpViewModel extends BaseViewModel {
   final String phoneNumber;
@@ -13,7 +14,7 @@ class VerifyOtpViewModel extends BaseViewModel {
   int _resendTime = 30;
   Timer? _timer;
   final _navigationService = locator<NavigationService>();
-  final _authService = locator<AuthService>();
+  final _authService = MockAuthService();
 
   VerifyOtpViewModel(this.phoneNumber)
       : otpControllers = List.generate(4, (_) => TextEditingController()) {
@@ -67,12 +68,20 @@ class VerifyOtpViewModel extends BaseViewModel {
       if (response.success && response.data != null) {
         _authService.updateAuthState(response.data!);
         
+        print('OTP Validation Response: ${response.data?.isAuthenticated}');
+        print('User name: ${response.data?.user.name}');
+
         if (response.data!.user.name.isEmpty) {
           await _navigationService.clearStackAndShow(Routes.confirmNameView);
         } else {
           await _navigationService.clearStackAndShow(Routes.homeView);
         }
+      } else {
+        setError(response.error ?? 'Verification failed');
       }
+    } catch (e) {
+      print('Error during verification: $e');
+      setError('Verification failed: ${e.toString()}');
     } finally {
       setBusy(false);
     }

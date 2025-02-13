@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:oruphones_app/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -59,6 +60,6 @@ class LandingViewModel extends BaseViewModel {
   }
 
   void onBackPressed() {
-    _navigationService.back();
+    Navigator.of(_navigationService.navigatorKey!.currentContext!).pop();
   }
 } 

@@ -10,6 +10,23 @@ class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
 
+  HomeViewModel() {
+    _authService.addListener(_onAuthStateChanged);
+  }
+
+  void _onAuthStateChanged() {
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _authService.removeListener(_onAuthStateChanged);
+    super.dispose();
+  }
+
+  bool get isUserLoggedIn => _authService.isAuthenticated;
+  // Later you can implement actual auth state check
+
   void onMenuTap(BuildContext context) {
     Navigator.of(context).push(
       PageRouteBuilder(
@@ -200,6 +217,10 @@ class HomeViewModel extends BaseViewModel {
 
   void onViewAllBrandsTap() {
     _showSnackBar('View All Brands');
+  }
+
+  void onNotificationsTap() {
+    _showSnackBar('Notifications');
   }
 
   // Helper method to reduce code duplication

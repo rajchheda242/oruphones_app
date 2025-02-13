@@ -21,7 +21,9 @@ class HomeView extends StackedView<HomeViewModel> {
             Container(
               width: 390,
               margin: const EdgeInsets.only(top: 47),
-              child: const HomeMenuBar(),
+              child: HomeMenuBar(
+                onNotificationsTap: viewModel.onNotificationsTap,
+              ),
             ),
             Container(
               width: 390,
@@ -160,7 +162,7 @@ class HomeView extends StackedView<HomeViewModel> {
                         ),
                         const SizedBox(height: 10),
                         const PhoneBanners(),
-                        const OtherMenu(),
+                        const OtherMenu(completer: null,),
                         const SizedBox(height: 28),
                         const TopBrands(),
                       ],

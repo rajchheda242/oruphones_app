@@ -272,7 +272,19 @@ class PhoneInputView extends StackedView<PhoneInputViewModel> {
                 right: 0,
                 child: IconButton(
                   icon: const Icon(Icons.close),
-                  onPressed: () => viewModel.goBack(),
+                  onPressed: () => viewModel.onClosePressed(),
+                  color: const Color(0xFF3F3E8F),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  iconSize: 24,
+                ),
+              ),
+              Positioned(
+                top: 24,
+                left: 0,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => viewModel.onBackPressed(),
                   color: const Color(0xFF3F3E8F),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),

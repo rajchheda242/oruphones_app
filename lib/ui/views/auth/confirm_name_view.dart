@@ -102,50 +102,7 @@ class ConfirmNameView extends StackedView<ConfirmNameViewModel> {
                       ),
                     ),
                     const SizedBox(height: 100), // Gap before button
-                    Container(
-                      width: 358,
-                      height: 51,
-                      decoration: BoxDecoration(
-                        color: viewModel.canConfirm 
-                            ? const Color(0xFF3F3E8F)
-                            : const Color(0xFF3F3E8F).withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(4),
-                        border: Border.all(
-                          color: const Color(0xFFB1B1B1),
-                          width: 1,
-                        ),
-                      ),
-                      child: TextButton(
-                        onPressed: viewModel.canConfirm ? () => viewModel.confirmName() : null,
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Confirm Name',
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                height: 27/18,
-                                letterSpacing: 0,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            const Icon(
-                              Icons.arrow_forward,
-                              size: 24,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    _buildConfirmButton(viewModel),
                   ],
                 ),
               ),
@@ -167,6 +124,53 @@ class ConfirmNameView extends StackedView<ConfirmNameViewModel> {
       ),
     );
   }
+
+  Widget _buildConfirmButton(ConfirmNameViewModel viewModel) => SizedBox(
+        width: 358,
+        height: 51,
+        child: ElevatedButton(
+          onPressed: viewModel.canSubmit ? viewModel.onConfirmPressed : null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF3F3E8F),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+              side: const BorderSide(
+                color: Color(0xFFB1B1B1),
+                width: 1,
+              ),
+            ),
+          ),
+          child: viewModel.isBusy
+              ? const SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2,
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Confirm Name',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    const Icon(
+                      Icons.arrow_forward,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+        ),
+      );
 
   @override
   ConfirmNameViewModel viewModelBuilder(BuildContext context) =>

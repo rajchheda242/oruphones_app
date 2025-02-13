@@ -5,7 +5,7 @@ import '../home_viewmodel.dart';
 import 'menu_button.dart';
 
 class OtherMenu extends ViewModelWidget<HomeViewModel> {
-  const OtherMenu({Key? key}) : super(key: key);
+  const OtherMenu({Key? key, required completer}) : super(key: key);
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {

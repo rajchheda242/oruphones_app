@@ -67,4 +67,12 @@ class PhoneInputViewModel extends BaseViewModel {
       builder: (context) => const PhoneInputView(isBottomSheet: true),
     );
   }
+
+  void onClosePressed() {
+    _navigationService.clearStackAndShow(Routes.landingView);
+  }
+
+  void onBackPressed() {
+    _navigationService.back();
+  }
 } 

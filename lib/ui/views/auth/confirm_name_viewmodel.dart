@@ -18,6 +18,9 @@ class ConfirmNameViewModel extends BaseViewModel {
     });
   }
 
+  bool get canSubmit => nameController.text.isNotEmpty;
+  Future<void> onConfirmPressed() => confirmName();
+
   bool get canConfirm => nameController.text.trim().isNotEmpty;
 
   String? getFieldError(String field) {
@@ -38,25 +41,29 @@ class ConfirmNameViewModel extends BaseViewModel {
       );
 
       if (result.success) {
-        // Update user name in auth state
-        if (_authService.currentUser != null) {
-          _authService.updateAuthState(
-            AuthResponse(
-              isAuthenticated: true,
-              user: User(
-                name: nameController.text.trim(),
-                joinDate: _authService.currentUser!.joinDate,
-                profileImage: _authService.currentUser!.profileImage,
-              ),
-            ),
-          );
-        }
-        // Navigate back to landing page (now in logged-in state)
-        await _navigationService.clearStackAndShow(Routes.landingView);
+        // First update the auth state
+        final authResponse = AuthResponse(
+          isAuthenticated: true,  // This is crucial
+          user: User(
+            name: nameController.text.trim(),
+            joinDate: DateTime.now().toString(),
+          ),
+        );
+        
+        // Update auth state BEFORE navigation
+        _authService.updateAuthState(authResponse);
+        
+        // Add a small delay to ensure state updates
+        await Future.delayed(const Duration(milliseconds: 100));
+        
+        // Then navigate
+        await _navigationService.clearStackAndShow(Routes.homeView);
       } else {
+        print('Failed to update name: ${result.error}');
         setError(result.error ?? 'Failed to update name');
       }
     } catch (e) {
+      print('Error in confirmName: $e');
       setError('Something went wrong');
     } finally {
       setBusy(false);
