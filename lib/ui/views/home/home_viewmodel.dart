@@ -223,6 +223,10 @@ class HomeViewModel extends BaseViewModel {
     _showSnackBar('Notifications');
   }
 
+  void navigateToLogin() {
+    _navigationService.navigateToPhoneInputView();
+  }
+
   // Helper method to reduce code duplication
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(

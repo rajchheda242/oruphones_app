@@ -60,6 +60,11 @@ class LandingViewModel extends BaseViewModel {
   }
 
   void onBackPressed() {
-    Navigator.of(_navigationService.navigatorKey!.currentContext!).pop();
+    // Get the current context from the navigator key
+    final context = _navigationService.navigatorKey?.currentContext;
+    if (context != null) {
+      // Pop until we reach the home view
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    }
   }
 } 

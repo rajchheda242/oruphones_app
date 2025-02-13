@@ -90,22 +90,24 @@ class HomeMenuBar extends ViewModelWidget<HomeViewModel> {
                     onPressed: onNotificationsTap,
                   )
                 else
-                  Container(
-                    width: 66,
-                    height: 29,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF6C018),
-                      borderRadius: BorderRadius.circular(4),
+                  ElevatedButton(
+                    onPressed: () => viewModel.navigateToLogin(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFF6C018),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      minimumSize: const Size(66, 29),
+                      maximumSize: const Size(66, 29),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      elevation: 0,
                     ),
-                    padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
-                    child: Center(
-                      child: Text(
-                        'Login',
-                        style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF121212),
-                        ),
+                    child: Text(
+                      'Login',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF121212),
                       ),
                     ),
                   ),
