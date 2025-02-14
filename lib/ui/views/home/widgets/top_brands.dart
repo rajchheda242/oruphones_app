@@ -3,9 +3,30 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 import '../home_viewmodel.dart';
 import 'brand_logo.dart';
+import '../widgets/sort_bottom_sheet.dart';
 
 class TopBrands extends ViewModelWidget<HomeViewModel> {
   const TopBrands({Key? key}) : super(key: key);
+
+  void _showSortBottomSheet(BuildContext context) {
+    print('Sort button tapped');
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SortBottomSheet(
+        onClose: () => Navigator.pop(context),
+        onClearAll: () {
+          print('Clear tapped');
+          Navigator.pop(context);
+        },
+        onApply: () {
+          print('Apply tapped');
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
@@ -32,11 +53,15 @@ class TopBrands extends ViewModelWidget<HomeViewModel> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => viewModel.onMoreBrandsTap(),
-                  child: Image.asset(
-                    'assets/icons/more.png',
-                    width: 23.26,
-                    height: 23.26,
+                  onTap: () => _showSortBottomSheet(context),
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Image.asset(
+                      'assets/icons/more.png',
+                      width: 23.26,
+                      height: 23.26,
+                    ),
                   ),
                 ),
               ],

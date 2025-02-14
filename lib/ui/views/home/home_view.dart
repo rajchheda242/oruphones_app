@@ -14,6 +14,7 @@ import 'dart:math' show pi;
 import 'widgets/faq_item.dart';
 import 'widgets/qr_code_frame.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'widgets/sort_bottom_sheet.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
   const HomeView({Key? key}) : super(key: key);
@@ -559,6 +560,26 @@ You will start receiving offers for your listing. If the offer is right, you can
         width: 40,
         height: 40,
         fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  // Add this method to show the sort bottom sheet
+  void _showSortBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SortBottomSheet(
+        onClose: () => Navigator.pop(context),
+        onClearAll: () {
+          // Handle clear all
+          Navigator.pop(context);
+        },
+        onApply: () {
+          // Handle apply sort
+          Navigator.pop(context);
+        },
       ),
     );
   }

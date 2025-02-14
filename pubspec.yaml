@@ -95,3 +95,9 @@ flutter:
     - assets/icons/telegram.png
     - assets/icons/twitter.png
     - assets/icons/whatsapp.png
+    - assets/icons/info.png
+    - assets/conditions/like_new.png
+    - assets/conditions/excellent.png
+    - assets/conditions/good.png
+    - assets/conditions/fair.png
+    - assets/conditions/needs_repair.png
