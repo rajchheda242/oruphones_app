@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:oruphones_app/services/mock_auth_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'app/app.locator.dart';
 import 'app/app.router.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Setup services
-  await setupLocator();
-  
-  // Ensure logged out state
-  final authService = locator<MockAuthService>();
-  await authService.logout();  // Force logout on app start
-  
+  setupLocator();
   runApp(const MyApp());
 }
 

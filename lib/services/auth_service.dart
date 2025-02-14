@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import '../core/models/api_response.dart';
 import 'package:flutter/foundation.dart';
 
+
 class AuthService extends ChangeNotifier {
   final _dio = Dio();
   final _baseUrl = 'http://40.90.224.241:5000';
@@ -26,10 +27,40 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<AuthResponse> checkLoginStatus() async {
-    return AuthResponse(
-      isAuthenticated: _isAuthenticated,
-      user: _currentUser ?? User(name: '', joinDate: ''),
-    );
+    try {
+      final response = await _dio.get('$_baseUrl/isLoggedIn');
+      print('Login status response: ${response.data}');
+
+      if (response.statusCode != 200) {
+        return AuthResponse(
+          isAuthenticated: false,
+          user: User(
+            name: '',
+            joinDate: DateTime.now().toString(),
+          ),
+        );
+      }
+
+      return AuthResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      print('Login status error: $e');
+      return AuthResponse(
+        isAuthenticated: false,
+        user: User(
+          name: '',
+          joinDate: DateTime.now().toString(),
+        ),
+      );
+    } catch (e) {
+      print('Unexpected login status error: $e');
+      return AuthResponse(
+        isAuthenticated: false,
+        user: User(
+          name: '',
+          joinDate: DateTime.now().toString(),
+        ),
+      );
+    }
   }
 
   Future<ApiResponse<void>> generateOtp({
@@ -63,24 +94,26 @@ class AuthService extends ChangeNotifier {
     required int mobileNumber,
     required int otp,
   }) async {
-    // Real OTP validation logic here
-    final isValid = otp == 9999; // For testing, can be replaced with real validation
-    
-    if (isValid) {
-      _isAuthenticated = true;
-      _currentUser = User(
-        name: '',
-        joinDate: DateTime.now().toString(),
+    try {
+      final response = await _dio.post(
+        '$_baseUrl/login/otpValidate',
+        data: {
+          'countryCode': countryCode,
+          'mobileNumber': mobileNumber,
+          'otp': otp,
+        },
+      );
+
+      return ApiResponse(
+        success: true,
+        data: AuthResponse.fromJson(response.data),
+      );
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        error: 'Failed to validate OTP: ${e.toString()}',
       );
     }
-
-    return ApiResponse(
-      success: true,
-      data: AuthResponse(
-        isAuthenticated: _isAuthenticated,
-        user: _currentUser ?? User(name: '', joinDate: ''),
-      ),
-    );
   }
 
   Future<ApiResponse<void>> updateUserName({
@@ -140,7 +173,8 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logout() async {
+  void logout() {
+    _isLoggedIn = false;
     _isAuthenticated = false;
     _currentUser = null;
     notifyListeners();

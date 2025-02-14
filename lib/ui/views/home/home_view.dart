@@ -23,6 +23,49 @@ class HomeView extends StackedView<HomeViewModel> {
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: Container(
+        width: 105,
+        height: 51,
+        margin: const EdgeInsets.only(bottom: 16),
+        child: FloatingActionButton.extended(
+          backgroundColor: const Color(0xFF363636),
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Sell Now button pressed'),
+                duration: Duration(seconds: 1),
+              ),
+            );
+          },
+          label: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Sell',
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFFF6C018),
+                ),
+              ),
+              const SizedBox(width: 4),
+              const Icon(
+                Icons.add,
+                color: Color(0xFFF6C018),
+                size: 14,
+              ),
+            ],
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(44),
+            side: const BorderSide(
+              color: Color(0xFFF6C018),
+              width: 4,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Column(
         children: [
           // FIXED section

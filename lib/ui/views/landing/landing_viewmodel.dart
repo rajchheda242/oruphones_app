@@ -60,11 +60,15 @@ class LandingViewModel extends BaseViewModel {
   }
 
   void onBackPressed() {
-    // Get the current context from the navigator key
+    // Check if we can pop the current route
     final context = _navigationService.navigatorKey?.currentContext;
     if (context != null) {
-      // Pop until we reach the home view
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      if (Navigator.of(context).canPop()) {
+        _navigationService.back();
+      } else {
+        // If we can't pop, we're likely at the root, so navigate to home
+        _navigationService.clearStackAndShow(Routes.homeView);
+      }
     }
   }
 } 

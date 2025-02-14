@@ -82,6 +82,12 @@ class BestDealsSection extends StatelessWidget {
                             color: const Color(0xFF2C2C2C),
                           ),
                         ),
+                        const SizedBox(width: 6),
+                        Image.asset(
+                          'assets/icons/down_arrow.png',
+                          width: 13.2,
+                          height: 13.2,
+                        ),
                       ],
                     ),
                   ),
