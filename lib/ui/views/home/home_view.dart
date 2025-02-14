@@ -138,17 +138,18 @@ class HomeView extends StackedView<HomeViewModel> {
                   // Invite a Friend section
                   Container(
                     width: 390,
-                    height: 450,
-                    child: Stack(  // Using Stack for overlapping elements
+                    height: 450,  // Main frame height
+                    child: Stack(
                       children: [
+                        // Black background frame
                         Positioned(
-                          top: -0.01,
+                          top: -0.01,  // As per Figma
                           child: Container(
                             width: 390,
-                            height: 237,
+                            height: 237,  // Black background height
                             color: const Color(0xFF363636),
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 28.85, left: 124),
+                              padding: const EdgeInsets.only(top: 28.85),
                               child: Text(
                                 'Invite a Friend',
                                 style: GoogleFonts.poppins(
@@ -158,16 +159,18 @@ class HomeView extends StackedView<HomeViewModel> {
                                   letterSpacing: -0.005,
                                   color: Colors.white,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ),
                         ),
+                        // White rounded container
                         Positioned(
                           top: 81.47,
                           left: 44,
                           child: Container(
                             width: 308,
-                            height: 238,
+                            padding: const EdgeInsets.all(24),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(40),
@@ -175,74 +178,100 @@ class HomeView extends StackedView<HomeViewModel> {
                                 BoxShadow(
                                   offset: Offset(0, 5),
                                   blurRadius: 12,
-                                  color: Color(0x1A787878),  // 10% opacity
+                                  color: Color(0x1A787878),
                                 ),
                                 BoxShadow(
                                   offset: Offset(0, 22),
                                   blurRadius: 22,
-                                  color: Color(0x17787878),  // 9% opacity
+                                  color: Color(0x17787878),
                                 ),
                                 BoxShadow(
                                   offset: Offset(0, 49),
                                   blurRadius: 29,
-                                  color: Color(0x0D787878),  // 5% opacity
+                                  color: Color(0x0D787878),
                                 ),
                                 BoxShadow(
                                   offset: Offset(0, 87),
                                   blurRadius: 35,
-                                  color: Color(0x03787878),  // 1% opacity
+                                  color: Color(0x03787878),
                                 ),
                                 BoxShadow(
                                   offset: Offset(0, 136),
                                   blurRadius: 38,
-                                  color: Color(0x00787878),  // 0% opacity
+                                  color: Color(0x00787878),
                                 ),
                               ],
                             ),
                             child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
-                                  width: 250,
-                                  height: 34,
-                                  margin: const EdgeInsets.only(top: 24),
-                                  child: Text(
-                                    'Tap to copy the respective download link to the clipboard',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      height: 17.28/12,
-                                      color: const Color(0xFF000000),
-                                    ),
+                                Text(
+                                  'Invite a friend to ORUphones application.\nTap to copy the respective download link\nto the clipboard',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 17.28/12,
+                                    color: const Color(0xFF000000),
                                   ),
                                 ),
                                 const SizedBox(height: 24),
-                                Container(
-                                  width: 308,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () => viewModel.launchStoreUrl('https://play.google.com/store/search?q=oruphones&c=apps&hl=en_US'),
-                                        child: Image.asset(
-                                          'assets/images/PlayStore_download_button.png',
-                                          width: 166.23,
-                                          height: 55.41,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16),
-                                      GestureDetector(
-                                        onTap: () => viewModel.launchStoreUrl('https://apps.apple.com/in/app/oruphones-sell-used-phones/id1629378420'),
-                                        child: Image.asset(
-                                          'assets/images/AppStore_download_button.png',
-                                          width: 166.23,
-                                          height: 55.41,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                    ],
+                                // Store buttons
+                                GestureDetector(
+                                  onTap: () => viewModel.launchStoreUrl('https://play.google.com/store/search?q=oruphones&c=apps&hl=en_US'),
+                                  child: Image.asset(
+                                    'assets/images/PlayStore_download_button.png',
+                                    width: 166.23,
+                                    height: 55.41,
+                                    fit: BoxFit.contain,
                                   ),
+                                ),
+                                const SizedBox(height: 16),
+                                GestureDetector(
+                                  onTap: () => viewModel.launchStoreUrl('https://apps.apple.com/in/app/oruphones-sell-used-phones/id1629378420'),
+                                  child: Image.asset(
+                                    'assets/images/AppStore_download_button.png',
+                                    width: 166.23,
+                                    height: 55.41,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // Or Share section
+                        Positioned(
+                          top: 340.01,
+                          left: 70,
+                          child: Container(
+                            width: 251,
+                            height: 76.16,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Or Share',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    height: 16.8/12,
+                                    letterSpacing: -0.005,
+                                    color: const Color(0xFF363636),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 19),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    _buildSocialIcon('instagram', viewModel.onInstagramShare),
+                                    const SizedBox(width: 30),
+                                    _buildSocialIcon('telegram', viewModel.onTelegramShare),
+                                    const SizedBox(width: 30),
+                                    _buildSocialIcon('twitter', viewModel.onTwitterShare),
+                                    const SizedBox(width: 30),
+                                    _buildSocialIcon('whatsapp', viewModel.onWhatsAppShare),
+                                  ],
                                 ),
                               ],
                             ),
@@ -519,6 +548,18 @@ You will start receiving offers for your listing. If the offer is right, you can
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSocialIcon(String iconName, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Image.asset(
+        'assets/icons/$iconName.png',
+        width: 40,
+        height: 40,
+        fit: BoxFit.contain,
+      ),
     );
   }
 

@@ -276,4 +276,20 @@ class HomeViewModel extends BaseViewModel {
   Future<void> launchStoreUrl(String url) async {
     await launchUrl(Uri.parse(url));
   }
+
+  void onInstagramShare() {
+    _showSnackBar('Instagram share');
+  }
+
+  void onTelegramShare() {
+    _showSnackBar('Telegram share');
+  }
+
+  void onTwitterShare() {
+    _showSnackBar('Twitter share');
+  }
+
+  void onWhatsAppShare() {
+    _showSnackBar('WhatsApp share');
+  }
 }
