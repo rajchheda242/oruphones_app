@@ -20,6 +20,7 @@ class SplashView extends StackedView<SplashViewModel> {
           width: 200,
           height: 200,
           fit: BoxFit.contain,
+          repeat: true,
           onLoaded: (_) => viewModel.initialize(),
         ),
       ),
@@ -35,16 +36,10 @@ class SplashViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
 
   Future<void> initialize() async {
-    await _authService.initialize();
+    // Add a delay to show the splash animation
+    await Future.delayed(const Duration(seconds: 2));
     
-    if (_authService.isLoggedIn) {
-      if (_authService.currentUser?.name.isEmpty ?? true) {
-        await _navigationService.replaceWith(Routes.confirmNameView);
-      } else {
-        await _navigationService.replaceWith(Routes.homeView);
-      }
-    } else {
-      await _navigationService.replaceWith(Routes.landingView);
-    }
+    // Go directly to home view
+    await _navigationService.replaceWith(Routes.homeView);
   }
 }

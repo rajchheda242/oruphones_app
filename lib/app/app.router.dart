@@ -5,58 +5,54 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/foundation.dart' as _i11;
-import 'package:flutter/material.dart' as _i10;
+import 'package:flutter/foundation.dart' as _i10;
+import 'package:flutter/material.dart' as _i9;
 import 'package:flutter/material.dart';
-import 'package:oruphones_app/ui/views/auth/confirm_name_view.dart' as _i8;
-import 'package:oruphones_app/ui/views/auth/login_view.dart' as _i6;
+import 'package:oruphones_app/ui/views/auth/confirm_name_view.dart' as _i7;
+import 'package:oruphones_app/ui/views/auth/login_view.dart' as _i8;
 import 'package:oruphones_app/ui/views/auth/phone_input_view.dart' as _i5;
-import 'package:oruphones_app/ui/views/auth/verify_otp_view.dart' as _i7;
-import 'package:oruphones_app/ui/views/home/home_view.dart' as _i9;
+import 'package:oruphones_app/ui/views/auth/verify_otp_view.dart' as _i6;
+import 'package:oruphones_app/ui/views/home/home_view.dart' as _i3;
 import 'package:oruphones_app/ui/views/landing/landing_view.dart' as _i4;
-import 'package:oruphones_app/ui/views/sample/sample_view.dart' as _i2;
-import 'package:oruphones_app/ui/views/splash/splash_view.dart' as _i3;
+import 'package:oruphones_app/ui/views/splash/splash_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i12;
+import 'package:stacked_services/stacked_services.dart' as _i11;
 
 class Routes {
-  static const sampleView = '/sample-view';
+  static const splashView = '/';
 
-  static const splashView = '/splash-view';
+  static const homeView = '/home-view';
 
   static const landingView = '/landing-view';
 
   static const phoneInputView = '/phone-input-view';
 
-  static const loginView = '/login-view';
-
   static const verifyOtpView = '/verify-otp-view';
 
   static const confirmNameView = '/confirm-name-view';
 
-  static const homeView = '/home-view';
+  static const loginView = '/login-view';
 
   static const all = <String>{
-    sampleView,
     splashView,
+    homeView,
     landingView,
     phoneInputView,
-    loginView,
     verifyOtpView,
     confirmNameView,
-    homeView,
+    loginView,
   };
 }
 
 class StackedRouter extends _i1.RouterBase {
   final _routes = <_i1.RouteDef>[
     _i1.RouteDef(
-      Routes.sampleView,
-      page: _i2.SampleView,
+      Routes.splashView,
+      page: _i2.SplashView,
     ),
     _i1.RouteDef(
-      Routes.splashView,
-      page: _i3.SplashView,
+      Routes.homeView,
+      page: _i3.HomeView,
     ),
     _i1.RouteDef(
       Routes.landingView,
@@ -67,38 +63,34 @@ class StackedRouter extends _i1.RouterBase {
       page: _i5.PhoneInputView,
     ),
     _i1.RouteDef(
-      Routes.loginView,
-      page: _i6.LoginView,
-    ),
-    _i1.RouteDef(
       Routes.verifyOtpView,
-      page: _i7.VerifyOtpView,
+      page: _i6.VerifyOtpView,
     ),
     _i1.RouteDef(
       Routes.confirmNameView,
-      page: _i8.ConfirmNameView,
+      page: _i7.ConfirmNameView,
     ),
     _i1.RouteDef(
-      Routes.homeView,
-      page: _i9.HomeView,
+      Routes.loginView,
+      page: _i8.LoginView,
     ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
-    _i2.SampleView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i2.SampleView(),
+    _i2.SplashView: (data) {
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i2.SplashView(),
         settings: data,
       );
     },
-    _i3.SplashView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i3.SplashView(),
+    _i3.HomeView: (data) {
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i3.HomeView(),
         settings: data,
       );
     },
     _i4.LandingView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.LandingView(),
         settings: data,
       );
@@ -107,45 +99,39 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<PhoneInputViewArguments>(
         orElse: () => const PhoneInputViewArguments(),
       );
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => _i5.PhoneInputView(
             key: args.key, isBottomSheet: args.isBottomSheet),
         settings: data,
       );
     },
-    _i6.LoginView: (data) {
-      final args = data.getArgs<LoginViewArguments>(nullOk: false);
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => _i6.LoginView(
-            key: args.key,
-            isBottomSheet: args.isBottomSheet,
-            phoneNumber: args.phoneNumber),
-        settings: data,
-      );
-    },
-    _i7.VerifyOtpView: (data) {
+    _i6.VerifyOtpView: (data) {
       final args = data.getArgs<VerifyOtpViewArguments>(nullOk: false);
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => _i7.VerifyOtpView(
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i6.VerifyOtpView(
             key: args.key,
             isBottomSheet: args.isBottomSheet,
             phoneNumber: args.phoneNumber),
         settings: data,
       );
     },
-    _i8.ConfirmNameView: (data) {
+    _i7.ConfirmNameView: (data) {
       final args = data.getArgs<ConfirmNameViewArguments>(
         orElse: () => const ConfirmNameViewArguments(),
       );
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => _i8.ConfirmNameView(
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i7.ConfirmNameView(
             key: args.key, isBottomSheet: args.isBottomSheet),
         settings: data,
       );
     },
-    _i9.HomeView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i9.HomeView(),
+    _i8.LoginView: (data) {
+      final args = data.getArgs<LoginViewArguments>(nullOk: false);
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i8.LoginView(
+            key: args.key,
+            isBottomSheet: args.isBottomSheet,
+            phoneNumber: args.phoneNumber),
         settings: data,
       );
     },
@@ -164,7 +150,7 @@ class PhoneInputViewArguments {
     this.isBottomSheet = false,
   });
 
-  final _i11.Key? key;
+  final _i10.Key? key;
 
   final bool isBottomSheet;
 
@@ -185,38 +171,6 @@ class PhoneInputViewArguments {
   }
 }
 
-class LoginViewArguments {
-  const LoginViewArguments({
-    this.key,
-    this.isBottomSheet = false,
-    required this.phoneNumber,
-  });
-
-  final _i11.Key? key;
-
-  final bool isBottomSheet;
-
-  final String phoneNumber;
-
-  @override
-  String toString() {
-    return '{"key": "$key", "isBottomSheet": "$isBottomSheet", "phoneNumber": "$phoneNumber"}';
-  }
-
-  @override
-  bool operator ==(covariant LoginViewArguments other) {
-    if (identical(this, other)) return true;
-    return other.key == key &&
-        other.isBottomSheet == isBottomSheet &&
-        other.phoneNumber == phoneNumber;
-  }
-
-  @override
-  int get hashCode {
-    return key.hashCode ^ isBottomSheet.hashCode ^ phoneNumber.hashCode;
-  }
-}
-
 class VerifyOtpViewArguments {
   const VerifyOtpViewArguments({
     this.key,
@@ -224,7 +178,7 @@ class VerifyOtpViewArguments {
     required this.phoneNumber,
   });
 
-  final _i11.Key? key;
+  final _i10.Key? key;
 
   final bool isBottomSheet;
 
@@ -255,7 +209,7 @@ class ConfirmNameViewArguments {
     this.isBottomSheet = false,
   });
 
-  final _i11.Key? key;
+  final _i10.Key? key;
 
   final bool isBottomSheet;
 
@@ -276,21 +230,39 @@ class ConfirmNameViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i12.NavigationService {
-  Future<dynamic> navigateToSampleView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.sampleView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
+class LoginViewArguments {
+  const LoginViewArguments({
+    this.key,
+    this.isBottomSheet = false,
+    required this.phoneNumber,
+  });
+
+  final _i10.Key? key;
+
+  final bool isBottomSheet;
+
+  final String phoneNumber;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "isBottomSheet": "$isBottomSheet", "phoneNumber": "$phoneNumber"}';
   }
 
+  @override
+  bool operator ==(covariant LoginViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key &&
+        other.isBottomSheet == isBottomSheet &&
+        other.phoneNumber == phoneNumber;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ isBottomSheet.hashCode ^ phoneNumber.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i11.NavigationService {
   Future<dynamic> navigateToSplashView([
     int? routerId,
     bool preventDuplicates = true,
@@ -299,6 +271,20 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.splashView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToHomeView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.homeView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -320,7 +306,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> navigateToPhoneInputView({
-    _i11.Key? key,
+    _i10.Key? key,
     bool isBottomSheet = false,
     int? routerId,
     bool preventDuplicates = true,
@@ -337,27 +323,8 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToLoginView({
-    _i11.Key? key,
-    bool isBottomSheet = false,
-    required String phoneNumber,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo<dynamic>(Routes.loginView,
-        arguments: LoginViewArguments(
-            key: key, isBottomSheet: isBottomSheet, phoneNumber: phoneNumber),
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToVerifyOtpView({
-    _i11.Key? key,
+    _i10.Key? key,
     bool isBottomSheet = false,
     required String phoneNumber,
     int? routerId,
@@ -376,7 +343,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> navigateToConfirmNameView({
-    _i11.Key? key,
+    _i10.Key? key,
     bool isBottomSheet = false,
     int? routerId,
     bool preventDuplicates = true,
@@ -393,28 +360,19 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToHomeView([
+  Future<dynamic> navigateToLoginView({
+    _i10.Key? key,
+    bool isBottomSheet = false,
+    required String phoneNumber,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.homeView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
-  Future<dynamic> replaceWithSampleView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.sampleView,
+  }) async {
+    return navigateTo<dynamic>(Routes.loginView,
+        arguments: LoginViewArguments(
+            key: key, isBottomSheet: isBottomSheet, phoneNumber: phoneNumber),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -429,6 +387,20 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.splashView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithHomeView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.homeView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -450,7 +422,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> replaceWithPhoneInputView({
-    _i11.Key? key,
+    _i10.Key? key,
     bool isBottomSheet = false,
     int? routerId,
     bool preventDuplicates = true,
@@ -467,27 +439,8 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithLoginView({
-    _i11.Key? key,
-    bool isBottomSheet = false,
-    required String phoneNumber,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return replaceWith<dynamic>(Routes.loginView,
-        arguments: LoginViewArguments(
-            key: key, isBottomSheet: isBottomSheet, phoneNumber: phoneNumber),
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithVerifyOtpView({
-    _i11.Key? key,
+    _i10.Key? key,
     bool isBottomSheet = false,
     required String phoneNumber,
     int? routerId,
@@ -506,7 +459,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> replaceWithConfirmNameView({
-    _i11.Key? key,
+    _i10.Key? key,
     bool isBottomSheet = false,
     int? routerId,
     bool preventDuplicates = true,
@@ -523,14 +476,19 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithHomeView([
+  Future<dynamic> replaceWithLoginView({
+    _i10.Key? key,
+    bool isBottomSheet = false,
+    required String phoneNumber,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.homeView,
+  }) async {
+    return replaceWith<dynamic>(Routes.loginView,
+        arguments: LoginViewArguments(
+            key: key, isBottomSheet: isBottomSheet, phoneNumber: phoneNumber),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

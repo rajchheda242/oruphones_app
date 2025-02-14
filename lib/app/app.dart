@@ -8,7 +8,6 @@ import '../ui/views/splash/splash_view.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/auth/phone_input_view.dart';
 import '../ui/views/landing/landing_view.dart';
-import '../ui/views/sample/sample_view.dart';
 
 @StackedApp(
   dependencies: [
@@ -16,14 +15,13 @@ import '../ui/views/sample/sample_view.dart';
     LazySingleton(classType: AuthService),
   ],
   routes: [
-    MaterialRoute(page: SampleView),
-    MaterialRoute(page: SplashView),
+    MaterialRoute(page: SplashView, initial: true),
+    MaterialRoute(page: HomeView),
     MaterialRoute(page: LandingView),
     MaterialRoute(page: PhoneInputView),
-    MaterialRoute(page: LoginView),
     MaterialRoute(page: VerifyOtpView),
     MaterialRoute(page: ConfirmNameView),
-    MaterialRoute(page: HomeView),
+    MaterialRoute(page: LoginView),
   ],
 )
 class App {}

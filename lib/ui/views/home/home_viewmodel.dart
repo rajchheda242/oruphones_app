@@ -5,6 +5,7 @@ import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../services/auth_service.dart';
 import '../landing/landing_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -240,11 +241,17 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void onFavoriteTap(bool isFavorite) {
-    _showSnackBar(isFavorite ? 'Added to favorites' : 'Removed from favorites');
+    ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
+      SnackBar(content: Text(isFavorite ? 'Added to favorites' : 'Removed from favorites')),
+    );
   }
 
   void onSellNowTap() {
     _showSnackBar('Sell Now');
+  }
+
+  void onAdTap() {
+    _showSnackBar('Advertisement');
   }
 
   // Helper method to reduce code duplication
@@ -252,5 +259,21 @@ class HomeViewModel extends BaseViewModel {
     ScaffoldMessenger.of(_navigationService.navigatorKey!.currentContext!).showSnackBar(
       SnackBar(content: Text('$message coming soon!')),
     );
+  }
+
+  int? _expandedFAQIndex;
+  int? get expandedFAQIndex => _expandedFAQIndex;
+
+  void toggleFAQ(int index) {
+    if (_expandedFAQIndex == index) {
+      _expandedFAQIndex = null;
+    } else {
+      _expandedFAQIndex = index;
+    }
+    notifyListeners();
+  }
+
+  Future<void> launchStoreUrl(String url) async {
+    await launchUrl(Uri.parse(url));
   }
 }

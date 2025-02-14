@@ -11,11 +11,9 @@ class GradientBoxBorder extends BoxBorder {
 
   @override
   BorderSide get top => BorderSide(width: width);
-  @override
   BorderSide get right => BorderSide(width: width);
   @override
   BorderSide get bottom => BorderSide(width: width);
-  @override
   BorderSide get left => BorderSide(width: width);
 
   @override

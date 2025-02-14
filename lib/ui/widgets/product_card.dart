@@ -14,6 +14,7 @@ class ProductCard extends StatefulWidget {
   final bool isVerified;
   final bool initialFavorite;
   final bool isPriceNegotiable;
+  final String discount;
   final VoidCallback? onTap;
   final Function(bool)? onFavoriteTap;
 
@@ -30,6 +31,7 @@ class ProductCard extends StatefulWidget {
     this.isVerified = false,
     this.initialFavorite = false,
     this.isPriceNegotiable = false,
+    this.discount = '',
     this.onTap,
     this.onFavoriteTap,
   }) : super(key: key);
@@ -119,101 +121,71 @@ class _ProductCardState extends State<ProductCard> {
                   ),
                 ),
                 
-                // Price Negotiable Tag
-                if (widget.isPriceNegotiable)
-                  Positioned(
-                    top: 160,
-                    child: ClipRect(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 3.86, sigmaY: 3.86),
-                        child: Container(
-                          width: 174,
+                // Top Frame with Verified and Heart
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  right: 8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Verified Badge
+                      if (widget.isVerified)
+                        Container(
                           height: 21,
-                          color: Colors.black.withOpacity(0.5),
-                          child: const Center(
-                            child: Text(
-                              'PRICE NEGOTIABLE',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 1,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(right: 16),
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF4CAF50),
+                                ),
+                                child: const Text(
+                                  'ORUVerified',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2,
+                                    letterSpacing: 0.2,
+                                  ),
+                                ),
                               ),
+                              Positioned(
+                                right: 0,
+                                child: ClipPath(
+                                  clipper: RibbonClipper(),
+                                  child: Container(
+                                    width: 12,
+                                    height: 21,
+                                    color: const Color(0xFF4CAF50),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      // Heart Icon - Always on the right
+                      GestureDetector(
+                        onTap: _toggleFavorite,
+                        child: Container(
+                          width: 25.09375,
+                          height: 25.09375,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withOpacity(0.7),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              isFavorite ? Icons.favorite : Icons.favorite_border,
+                              color: isFavorite ? Colors.red : Colors.black,
+                              size: 16,
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-
-                // Top Frame with Verified and Heart
-                Positioned(
-                  top: 8,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Verified Badge
-                        if (widget.isVerified)
-                          Container(
-                            height: 21,
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF4CAF50),
-                                  ),
-                                  child: const Text(
-                                    'ORUVerified',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.2,
-                                      letterSpacing: 0.2,
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  right: 0,
-                                  child: ClipPath(
-                                    clipper: RibbonClipper(),
-                                    child: Container(
-                                      width: 12,
-                                      height: 21,
-                                      color: const Color(0xFF4CAF50),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        // Heart Icon
-                        GestureDetector(
-                          onTap: _toggleFavorite,
-                          child: Container(
-                            width: 25.09375,
-                            height: 25.09375,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white.withOpacity(0.7),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                isFavorite ? Icons.favorite : Icons.favorite_border,
-                                color: isFavorite ? Colors.red : Colors.black,
-                                size: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ],
