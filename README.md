@@ -2,126 +2,111 @@
 
 A Flutter application for OruPhones internship assignment.
 
-## Project Setup Steps
+## Features
+- Splash Screen with authentication persistence
+- Complete Authentication Flow (both screen and bottom sheet modes)
+- Home Screen with product listings and pagination
+- Firebase Push Notifications
+- Like/Unlike Products functionality
+- Cyclic Dummy Product Cards
+- Image Caching
+- Responsive Layout Design
 
-### Step 1: Initial Setup 
-- Created new Flutter project
-- Added basic dependencies:
-  - lottie: For splash screen animation
-- Created basic folder structure
-- Added splash screen animation asset
+## Architecture & State Management
+Using **Stacked** state management with MVVM architecture:
+- Clean separation of concerns (Views, ViewModels, Services)
+- Proper dependency injection
+- Reusable components
+- Proper error handling
+- Efficient state management without setState
 
-### Step 2: Splash Screen Implementation ⏳
-- Added authentication check
-- Added API service integration
-- Added state management with Stacked
-- Added Firebase initialization and notification permissions
-- Implemented navigation logic
-
-### Step 3: Authentication Implementation 🚧
-- Created reusable login widget (works as both screen and bottom sheet)
-- Implemented OTP generation API
-- Added phone number validation
-- Added terms and conditions acceptance
-- Added proper error handling with API responses
-- Improved UI/UX with form validation
-- Added OTP verification screen with:
-  - 4-digit OTP input
-  - Resend OTP functionality with timer
-  - Validation and error handling
-  - Navigation logic based on user state
-- Added Confirm Name screen with:
-  - Name input validation
-  - API integration for name update
-  - Error handling and loading states
-
-### Project Structure
+## Project Structure
 ```
 lib/
+├── app/
+│   ├── app.dart
+│   └── app.router.dart
 ├── core/
-│   └── models/
-│       └── api_response.dart
-├── services/
-│   ├── auth_service.dart
-│   └── firebase_service.dart
+│   ├── models/
+│   │   ├── product.dart
+│   │   └── user.dart
+│   └── services/
+│       ├── auth_service.dart
+│       ├── product_service.dart
+│       └── firebase_service.dart
 ├── ui/
+│   ├── common/
+│   │   └── widgets/
 │   └── views/
 │       ├── auth/
 │       │   ├── login_view.dart
-│       │   ├── login_viewmodel.dart
 │       │   ├── verify_otp_view.dart
-│       │   ├── verify_otp_viewmodel.dart
-│       │   ├── confirm_name_view.dart
-│       │   └── confirm_name_viewmodel.dart
+│       │   └── confirm_name_view.dart
+│       ├── home/
+│       │   ├── home_view.dart
+│       │   └── widgets/
+│       │       ├── product_card.dart
+│       │       ├── filter_sheet.dart
+│       │       └── sort_sheet.dart
 │       └── splash/
 │           ├── splash_view.dart
 │           └── splash_viewmodel.dart
 └── main.dart
-
-assets/
-└── animations/
-    └── splash.json
 ```
-
-### Current Progress
-- [x] Project Setup
-- [x] Splash Screen Implementation
-- [⏳] Authentication Flow
-- [ ] Home Screen
-- [ ] Firebase Integration
-
-### Architecture Highlights
-- Using Stacked for state management
-- Proper separation of concerns (Views, ViewModels, Services)
-- Reusable components
-- Proper error handling with API responses
-- Form validation and user feedback
-
-## Features
-- OTP Authentication
-- Product Listings with Pagination
-- Firebase Push Notifications
-- Like/Unlike Products
-- User Profile Management
 
 ## Setup Instructions
 1. Clone the repository
-2. Run `flutter pub get`
-3. Run `flutter pub run build_runner build` to generate route files
-4. Run the app using `flutter run`
+2. Install Flutter dependencies:
+   ```bash
+   flutter pub get
+   ```
+3. Configure Firebase:
+   - Add `google-services.json` for Android
+   - Add `GoogleService-Info.plist` for iOS
+4. Run the app:
+   ```bash
+   flutter run
+   ```
+
+## Key Implementation Details
+
+### Splash Screen
+- Authentication state persistence
+- Firebase notification permission handling
+- Navigation logic based on user state
+- New user name verification check
+
+### Authentication
+- Phone number validation
+- OTP verification
+- Name confirmation for new users
+- Reusable authentication UI (works as both screen and bottom sheet)
+- Persistent login state
+
+### Home Screen
+- Custom scrolling behavior matching OruPhones app
+- Product listing with pagination
+- Like/Unlike functionality with authentication integration
+- Cyclic dummy product cards (every 7th listing)
+- Image caching for better performance
+- Responsive grid layout
+
+### Firebase Integration
+- Push notification handling (foreground and background)
+- Notification permission management
+- Firebase Cloud Messaging implementation
 
 ## Dependencies
-- stacked: State management
-- firebase_core: Firebase integration
-- firebase_messaging: Push notifications
-- dio: Network calls
-- cached_network_image: Image caching
-- flutter_secure_storage: Secure storage
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  stacked: ^3.0.0
+  firebase_core: ^2.0.0
+  firebase_messaging: ^14.0.0
+  cached_network_image: ^3.0.0
+  dio: ^5.0.0
+  flutter_secure_storage: ^8.0.0
+```
 
-## Development Status
-working
-
-## Architecture & State Management
-- Using **Stacked** state management for MVVM architecture
-- Clean separation of concerns with ViewModels handling business logic
-- Reusable components for consistent UI elements
-
-## Authentication Flow
-- Complete authentication flow with phone number verification
-- OTP verification system
-- Name confirmation for new users
-- Supports both full-screen and bottom sheet modes
-- Persistent authentication state
-
-## Key Features
-- Phone number authentication
-- OTP verification
-- User name confirmation
-- Persistent login state
-- Bottom sheet support for in-app authentication
-
-## Technical Details
-- Flutter SDK: >=3.0.0 <4.0.0
-- Stacked State Management
-- Firebase Integration
-- Clean Architecture
+Note: Some of the features and functionality are not implemented yet. I have done the best I could.
